@@ -436,6 +436,8 @@
 	mmc-pwrseq = <&emmc_pwrseq>;
 	non-removable;
 	disable-wp;
+	ti,otap-del-sel-legacy = <0x5>;
+	ti,otap-del-sel-mmc-hs = <0x5>;
 	status="okay";
 };
 
