@@ -33,6 +33,9 @@
 
 #define AM62X_DEV_MCU_M4FSS0_CORE0_DEV_ID 9
 
+#define NR_GPIO_CTX 10
+#define GPIO_CTX_BASE 0x00a00004
+
 /* List of all TI SCI devices active in system */
 static LIST_HEAD(ti_sci_list);
 /* Protection for the entire list */
@@ -132,6 +135,8 @@ struct ti_sci_info {
 
 	int nr_wakeup_sources;
 	struct device_node **wakeup_source_nodes;
+
+	u8 gpio_ctx[NR_GPIO_CTX];
 };
 
 #define cl_to_ti_sci_info(c)	container_of(c, struct ti_sci_info, cl)
@@ -3590,10 +3595,38 @@ static int ti_sci_prepare_system_suspend(struct ti_sci_info *info)
 #endif
 }
 
+static void ti_sci_save_gpio_ctx(struct ti_sci_info *info)
+{
+	void *va;
+	int i;
+
+	va = ioremap(GPIO_CTX_BASE, 4 * NR_GPIO_CTX);
+	if (IS_ERR(va))
+		return;
+	for (i = 0; i < NR_GPIO_CTX; i++)
+		info->gpio_ctx[i] = readl_relaxed(va + i * 4) & 0xff;
+	iounmap(va);
+}
+
+static void ti_sci_restore_gpio_ctx(struct ti_sci_info *info)
+{
+	int ret, i;
+
+	if (!info->gpio_ctx[0])
+		return;
+	for (i = 0; i < NR_GPIO_CTX; i++) {
+		ret = ti_sci_cmd_set_irq(&info->handle, 3, info->gpio_ctx[i], 3, i);
+		if (ret)
+			return;
+	}
+}
+
 static int ti_sci_suspend(struct device *dev)
 {
 	struct ti_sci_info *info = dev_get_drvdata(dev);
 	int ret;
+
+	ti_sci_save_gpio_ctx(info);
 
 	ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_ENABLE);
 	if (ret)
@@ -3621,6 +3654,8 @@ static int ti_sci_resume(struct device *dev)
 
 	ti_sci_msg_cmd_lpm_wake_reason(&info->handle, &source, &time);
 	dev_info(dev, "%s: wakeup source: 0x%X\n", __func__, source);
+
+	ti_sci_restore_gpio_ctx(info);
 
 	return 0;
 }
