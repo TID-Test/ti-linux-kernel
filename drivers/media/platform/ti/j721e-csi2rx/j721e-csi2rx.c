@@ -1339,8 +1339,16 @@ static int ti_csi2rx_init_dma(struct ti_csi2rx_ctx *ctx)
 
 	snprintf(name, sizeof(name), "rx%u", ctx->idx);
 	ctx->dma.chan = dma_request_chan(ctx->csi->dev, name);
-	if (IS_ERR(ctx->dma.chan))
-		return PTR_ERR(ctx->dma.chan);
+	if (IS_ERR(ctx->dma.chan)) {
+		ret = PTR_ERR(ctx->dma.chan);
+
+		if (ret == -EINVAL) {
+			printk("%s: dma_request_chan for %s failed, deferring\n", __func__, name);
+			ret = -EPROBE_DEFER;
+		}
+
+		return ret;
+	}
 
 	ret = dmaengine_slave_config(ctx->dma.chan, &cfg);
 	if (ret) {
