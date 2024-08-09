@@ -432,7 +432,6 @@
 &sdhci0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_mmc0_pins_default>;
-	ti,driver-strength-ohm = <50>;
 	mmc-pwrseq = <&emmc_pwrseq>;
 	non-removable;
 	disable-wp;
@@ -448,7 +447,6 @@
 	pinctrl-0 = <&main_mmc2_pins_default>, <&wkup_clkout0_pins_default>;
 	bus-width = <4>;
 	disable-wp;
-	ti,driver-strength-ohm = <50>;
 	status = "okay";
 	ti,fails-without-test-cd;
 	non-removable;
