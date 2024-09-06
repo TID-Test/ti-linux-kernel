@@ -71,30 +71,41 @@
 		};
 	};
 
-	// gpio-keys {
-	// 	compatible = "gpio-keys";
+	// display1 {
+	// 	compatible = "sgd,gktw70sdae4se";
 	// 	status = "okay";
-	// 	back {
-	// 		label = "Back";
-	// 		linux,code = <KEY_BACK>;
-	// 		gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
-	// 		wakeup-source;
-	// 	};
-
-	// 	home {
-	// 		label = "Home";
-	// 		linux,code = <KEY_HOME>;
-	// 		gpios = <&pca9534 2 GPIO_ACTIVE_LOW>;
-	// 		wakeup-source;
-	// 	};
-
-	// 	menu {
-	// 		label = "Menu";
-	// 		linux,code = <KEY_MENU>;
-	// 		gpios = <&pca9534 3 GPIO_ACTIVE_LOW>;
-	// 		wakeup-source;
+	// 	port@1 {
+	// 			lcd_in1: endpoint {
+	// 				remote-endpoint = <&oldi_out1>;
+	// 		};
 	// 	};
 	// };
+
+	gpio-keys {
+		compatible = "gpio-keys";
+		status = "okay";
+		// back {
+		// 	label = "Back";
+		// 	linux,code = <KEY_BACK>;
+		// 	gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
+		// 	wakeup-source;
+		// };
+
+		home {
+			label = "Home";
+			// linux,code = <KEY_HOME>;
+			linux,code = <123>;
+			gpios = <&pca9534 2 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+		};
+
+		// menu {
+		// 	label = "Menu";
+		// 	linux,code = <KEY_MENU>;
+		// 	gpios = <&pca9534 3 GPIO_ACTIVE_LOW>;
+		// 	wakeup-source;
+		// };
+	};
 
 	gpio-leds {
 		compatible = "gpio-leds";
@@ -212,6 +223,14 @@
 			remote-endpoint = <&lcd_in0>;
 		};
 	};
+
+	// /* VP1: LVDS Output (OLDI TX 1) */
+    // port@2 {
+    //     reg = <2>;
+    //     oldi_out1: endpoint {
+    //         remote-endpoint = <&lcd_in1>;
+    //     };
+    // };
 };
 
 &epwm1 {
@@ -334,18 +353,40 @@
 	};
 };
 
+// /* Voltage reference node */
+// vref-ads: regulator-vref {
+//     compatible = "regulator-fixed";
+//     regulator-name = "vref-ads";
+//     regulator-min-microvolt = <2500000>; /* 2.5V reference voltage */
+//     regulator-max-microvolt = <2500000>;
+// };
+
 // I2C#B
 &main_i2c2 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_i2c2_pins_default>;
-	clock-frequency = <400000>;
-	status = "okay";
+	// ALREADY DEFINED IN k"-am625-var-som.dtsi
+	// pinctrl-names = "default";
+	// pinctrl-0 = <&main_i2c2_pins_default>;
+	// clock-frequency = <400000>;
+	// status = "okay";
 
-	/* SHT25 */
-	sht25@40 {
-		compatible = "sht25";
-		reg = <0x40>;
+	// ti,ads7828
+	ads7828@48 {
+		compatible = "ti,ads7828";
+		reg = <0x48>;
+
+        ti,ext_vref;      /* Optional: Use external reference if set */
+		ti,vref_mv = <2500>;
+
 		status = "okay";
+
+		input1{
+			label = "ADC1";
+		};
+
+		input2{
+			label = "ADC2";
+		};
+
 	};
 };
 
