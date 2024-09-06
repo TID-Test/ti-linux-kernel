@@ -6,6 +6,8 @@
  * Copyright (C) 2024 Variscite Ltd. - https://www.variscite.com/
  */
 
+ // FROM SysConig Software use AM62x ALW
+
 /dts-v1/;
 
 #include "k3-am625-var-som.dtsi"
@@ -51,11 +53,11 @@
 		bootargs = "console=ttyS0,115200n8 earlycon=ns16550a,mmio32,0x02800000";
 	};
 
-	clk_ov5640_fixed: clock {
-		#clock-cells = <0>;
-		compatible = "fixed-clock";
-		clock-frequency = <24000000>;
-	};
+	// clk_ov5640_fixed: clock {
+	// 	#clock-cells = <0>;
+	// 	compatible = "fixed-clock";
+	// 	clock-frequency = <24000000>;
+	// };
 
 	display {
 		compatible = "sgd,gktw70sdae4se";
@@ -69,30 +71,30 @@
 		};
 	};
 
-	gpio-keys {
-		compatible = "gpio-keys";
-		status = "okay";
-		back {
-			label = "Back";
-			linux,code = <KEY_BACK>;
-			gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-		};
+	// gpio-keys {
+	// 	compatible = "gpio-keys";
+	// 	status = "okay";
+	// 	back {
+	// 		label = "Back";
+	// 		linux,code = <KEY_BACK>;
+	// 		gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
+	// 		wakeup-source;
+	// 	};
 
-		home {
-			label = "Home";
-			linux,code = <KEY_HOME>;
-			gpios = <&pca9534 2 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-		};
+	// 	home {
+	// 		label = "Home";
+	// 		linux,code = <KEY_HOME>;
+	// 		gpios = <&pca9534 2 GPIO_ACTIVE_LOW>;
+	// 		wakeup-source;
+	// 	};
 
-		menu {
-			label = "Menu";
-			linux,code = <KEY_MENU>;
-			gpios = <&pca9534 3 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-		};
-	};
+	// 	menu {
+	// 		label = "Menu";
+	// 		linux,code = <KEY_MENU>;
+	// 		gpios = <&pca9534 3 GPIO_ACTIVE_LOW>;
+	// 		wakeup-source;
+	// 	};
+	// };
 
 	gpio-leds {
 		compatible = "gpio-leds";
@@ -105,14 +107,14 @@
 		};
 	};
 
-	ov5640_buf_en: ov5640-buf-en {
-		compatible = "regulator-fixed";
-		regulator-name = "ov5640_buf_en";
-		gpios = <&main_gpio0 21 GPIO_ACTIVE_HIGH>;
-		regulator-always-on;
-		regulator-boot-on;
-		status="okay";
-	};
+	// ov5640_buf_en: ov5640-buf-en {
+	// 	compatible = "regulator-fixed";
+	// 	regulator-name = "ov5640_buf_en";
+	// 	gpios = <&main_gpio0 21 GPIO_ACTIVE_HIGH>;
+	// 	regulator-always-on;
+	// 	regulator-boot-on;
+	// 	status="okay";
+	// };
 
 	vdd_mmc1: regulator-3 {
 		compatible = "regulator-fixed";
@@ -141,18 +143,18 @@
 		status="okay";
 	};
 
-	transceiver1: can-phy0 {
-		compatible = "ti,tcan1042";
-		#phy-cells = <0>;
-		max-bitrate = <5000000>;
-	};
+	// transceiver1: can-phy0 {
+	// 	compatible = "ti,tcan1042";
+	// 	#phy-cells = <0>;
+	// 	max-bitrate = <5000000>;
+	// };
 };
 
 &cpsw3g {
 	status = "okay";
 	pinctrl-names = "default";
-	pinctrl-0 = <&main_rgmii1_pins_default
-		     &main_rgmii2_pins_default>;
+	// pinctrl-0 = <&main_rgmii1_pins_default &main_rgmii2_pins_default>;
+	pinctrl-0 = <&main_rgmii1_pins_default>;
 
 	cpts@3d000 {
 		/* MAP HW3_TS_PUSH to GENF1 */
@@ -165,30 +167,30 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_mdio1_pins_default>;
 	cpsw3g_phy1: ethernet-phy@5 {
-		reg = <5>;
-		compatible = "ethernet-phy-id0283.bc30";
-		reset-gpios = <&pca9534 5 GPIO_ACTIVE_LOW>;
-		reset-assert-us = <10000>;
-		reset-deassert-us = <20000>;
+		// reg = <5>;
+		// compatible = "ethernet-phy-id0283.bc30";
+		// reset-gpios = <&pca9534 5 GPIO_ACTIVE_LOW>;
+		// reset-assert-us = <10000>;
+		// reset-deassert-us = <20000>;
 	};
 };
 
 &cpsw_port2 {
 	phy-mode = "rgmii";
 	phy-handle = <&cpsw3g_phy1>;
-	status = "okay";
+	status = "disabled";
 };
 
-&csi0_port0 {
-	status = "okay";
+// &csi0_port0 {
+// 	status = "okay";
 
-	csi2rx0_in_sensor: endpoint {
-		remote-endpoint = <&csi2_cam0>;
-		bus-type = <4>; /* CSI2 DPHY. */
-		clock-lanes = <0>;
-		data-lanes = <1 2>;
-	};
-};
+// 	csi2rx0_in_sensor: endpoint {
+// 		remote-endpoint = <&csi2_cam0>;
+// 		bus-type = <4>; /* CSI2 DPHY. */
+// 		clock-lanes = <0>;
+// 		data-lanes = <1 2>;
+// 	};
+// };
 
 &dphy0 {
 	status = "okay";
@@ -230,12 +232,12 @@
 	};
 };
 
-&main_mcan0 {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_mcan0_pins_default>;
-	phys = <&transceiver1>;
-};
+// &main_mcan0 {
+// 	status = "okay";
+// 	pinctrl-names = "default";
+// 	pinctrl-0 = <&main_mcan0_pins_default>;
+// 	phys = <&transceiver1>;
+// };
 
 &main_i2c0{
 	status = "okay";
@@ -256,49 +258,49 @@
 		wakeup-source;
 		status = "okay";
 
-		usb3_sel_hog {
-			gpio-hog;
-			gpios = <4 0>;
-			output-low;
-			line-name = "usb3_sel";
-		};
+		// usb3_sel_hog {
+		// 	gpio-hog;
+		// 	gpios = <4 0>;
+		// 	output-low;
+		// 	line-name = "usb3_sel";
+		// };
 
-		eth_som_vselect_hog {
-			gpio-hog;
-			gpios = <6 0>;
-			output-low;
-			line-name = "eth-vselect";
-		};
+		// eth_som_vselect_hog {
+		// 	gpio-hog;
+		// 	gpios = <6 0>;
+		// 	output-low;
+		// 	line-name = "eth-vselect";
+		// };
 
-		eth_mdio_enable_hog {
-			gpio-hog;
-			gpios = <7 0>;
-			output-high;
-			line-name = "eth-mdio-enable";
-		};
+		// eth_mdio_enable_hog {
+		// 	gpio-hog;
+		// 	gpios = <7 0>;
+		// 	output-high;
+		// 	line-name = "eth-mdio-enable";
+		// };
 	};
 
-	ov5640: camera@3c {
-		compatible = "ovti,ov5640";
-		reg = <0x3c>;
+	// ov5640: camera@3c {
+	// 	compatible = "ovti,ov5640";
+	// 	reg = <0x3c>;
 
-		clocks = <&clk_ov5640_fixed>;
-		clock-names = "xclk";
+	// 	clocks = <&clk_ov5640_fixed>;
+	// 	clock-names = "xclk";
 
-		powerdown-gpios = <&main_gpio0 10 GPIO_ACTIVE_HIGH>;
-		reset-gpios = <&main_gpio0 22 GPIO_ACTIVE_LOW>;
+	// 	powerdown-gpios = <&main_gpio0 10 GPIO_ACTIVE_HIGH>;
+	// 	reset-gpios = <&main_gpio0 22 GPIO_ACTIVE_LOW>;
 
-		pinctrl-names = "default";
-		pinctrl-0 = <&ov5640_pins_default>;
+	// 	pinctrl-names = "default";
+	// 	pinctrl-0 = <&ov5640_pins_default>;
 
-		port {
-			csi2_cam0: endpoint {
-				remote-endpoint = <&csi2rx0_in_sensor>;
-				clock-lanes = <0>;
-				data-lanes = <1 2>;
-			};
-		};
-	};
+	// 	port {
+	// 		csi2_cam0: endpoint {
+	// 			remote-endpoint = <&csi2rx0_in_sensor>;
+	// 			clock-lanes = <0>;
+	// 			data-lanes = <1 2>;
+	// 		};
+	// 	};
+	// };
 };
 
 &main_i2c1 {
@@ -328,6 +330,21 @@
 		touchscreen-inverted-x;
 		touchscreen-inverted-y;
 		wakeup-source;
+		status = "okay";
+	};
+};
+
+// I2C#B
+&main_i2c2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_i2c2_pins_default>;
+	clock-frequency = <400000>;
+	status = "okay";
+
+	/* SHT25 */
+	sht25@40 {
+		compatible = "sht25";
+		reg = <0x40>;
 		status = "okay";
 	};
 };
@@ -365,12 +382,12 @@
 		>;
 	};
 
-	main_mcan0_pins_default: main-mcan0-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x1dc, PIN_INPUT, 0) /* (E15) MCAN0_RX */
-			AM62X_IOPAD(0x1d8, PIN_OUTPUT, 0) /* (C15) MCAN0_TX */
-		>;
-	};
+	// main_mcan0_pins_default: main-mcan0-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x1dc, PIN_INPUT, 0) /* (E15) MCAN0_RX */
+	// 		AM62X_IOPAD(0x1d8, PIN_OUTPUT, 0) /* (C15) MCAN0_TX */
+	// 	>;
+	// };
 
 	main_mmc1_pins_default: main-mmc1-pins-default {
 		pinctrl-single,pins = <
@@ -409,22 +426,22 @@
 		>;
 	};
 
-	main_rgmii2_pins_default: main-rgmii2-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x184, PIN_INPUT, 0) /* (AE23) RGMII2_RD0 */
-			AM62X_IOPAD(0x188, PIN_INPUT, 0) /* (AB20) RGMII2_RD1 */
-			AM62X_IOPAD(0x18c, PIN_INPUT, 0) /* (AC21) RGMII2_RD2 */
-			AM62X_IOPAD(0x190, PIN_INPUT, 0) /* (AE22) RGMII2_RD3 */
-			AM62X_IOPAD(0x180, PIN_INPUT, 0) /* (AD23) RGMII2_RXC */
-			AM62X_IOPAD(0x17c, PIN_INPUT, 0) /* (AD22) RGMII2_RX_CTL */
-			AM62X_IOPAD(0x16c, PIN_INPUT, 0) /* (Y18) RGMII2_TD0 */
-			AM62X_IOPAD(0x170, PIN_INPUT, 0) /* (AA18) RGMII2_TD1 */
-			AM62X_IOPAD(0x174, PIN_INPUT, 0) /* (AD21) RGMII2_TD2 */
-			AM62X_IOPAD(0x178, PIN_INPUT, 0) /* (AC20) RGMII2_TD3 */
-			AM62X_IOPAD(0x168, PIN_INPUT_PULLDOWN, 0) /* (AE21) RGMII2_TXC */
-			AM62X_IOPAD(0x164, PIN_INPUT, 0) /* (AA19) RGMII2_TX_CTL */
-		>;
-	};
+	// main_rgmii2_pins_default: main-rgmii2-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x184, PIN_INPUT, 0) /* (AE23) RGMII2_RD0 */
+	// 		AM62X_IOPAD(0x188, PIN_INPUT, 0) /* (AB20) RGMII2_RD1 */
+	// 		AM62X_IOPAD(0x18c, PIN_INPUT, 0) /* (AC21) RGMII2_RD2 */
+	// 		AM62X_IOPAD(0x190, PIN_INPUT, 0) /* (AE22) RGMII2_RD3 */
+	// 		AM62X_IOPAD(0x180, PIN_INPUT, 0) /* (AD23) RGMII2_RXC */
+	// 		AM62X_IOPAD(0x17c, PIN_INPUT, 0) /* (AD22) RGMII2_RX_CTL */
+	// 		AM62X_IOPAD(0x16c, PIN_INPUT, 0) /* (Y18) RGMII2_TD0 */
+	// 		AM62X_IOPAD(0x170, PIN_INPUT, 0) /* (AA18) RGMII2_TD1 */
+	// 		AM62X_IOPAD(0x174, PIN_INPUT, 0) /* (AD21) RGMII2_TD2 */
+	// 		AM62X_IOPAD(0x178, PIN_INPUT, 0) /* (AC20) RGMII2_TD3 */
+	// 		AM62X_IOPAD(0x168, PIN_INPUT_PULLDOWN, 0) /* (AE21) RGMII2_TXC */
+	// 		AM62X_IOPAD(0x164, PIN_INPUT, 0) /* (AA19) RGMII2_TX_CTL */
+	// 	>;
+	// };
 
 	main_spi2_pins_default: main_spi2-pins-default {
 		pinctrl-single,pins = <
@@ -462,13 +479,13 @@
 		>;
 	};
 
-	ov5640_pins_default: ov5640-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0028, PIN_OUTPUT, 7) /* (J22) OSPI0_D7.GPIO0_10 */
-			AM62X_IOPAD(0x0054, PIN_OUTPUT, 7) /* (P21) GPMC0_AD6.GPIO0_21 */
-			AM62X_IOPAD(0x0058, PIN_OUTPUT, 7) /* (R23) GPMC0_AD7.GPIO0_22 */
-		>;
-	};
+	// ov5640_pins_default: ov5640-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x0028, PIN_OUTPUT, 7) /* (J22) OSPI0_D7.GPIO0_10 */
+	// 		AM62X_IOPAD(0x0054, PIN_OUTPUT, 7) /* (P21) GPMC0_AD6.GPIO0_21 */
+	// 		AM62X_IOPAD(0x0058, PIN_OUTPUT, 7) /* (R23) GPMC0_AD7.GPIO0_22 */
+	// 	>;
+	// };
 
 	pca9534_irq_default: pca9534_irq_default {
 		pinctrl-single,pins = <
