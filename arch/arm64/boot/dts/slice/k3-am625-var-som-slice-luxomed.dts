@@ -159,6 +159,10 @@
 	// 	#phy-cells = <0>;
 	// 	max-bitrate = <5000000>;
 	// };
+
+	// hellokeys{
+	// 	compatible = "arrow,hellokeys";
+	// };
 };
 
 &cpsw3g {
@@ -379,18 +383,13 @@
 
 		status = "okay";
 
-		input1{
-			label = "ADC1";
-		};
-
-		input2{
-			label = "ADC2";
-		};
-
 	};
 };
 
 &main_pmx0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&mgc3030_pins_default>;
+
 	captouch_pins_default: captouch-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x01b8, PIN_INPUT, 7) /* (C13) SPI0_CS1.GPIO1_16 */
@@ -429,6 +428,14 @@
 	// 		AM62X_IOPAD(0x1d8, PIN_OUTPUT, 0) /* (C15) MCAN0_TX */
 	// 	>;
 	// };
+
+	mgc3030_pins_default: mgc3030-pins-default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x1dc, PIN_OUTPUT, 7) /* (E15) MCAN0_RX */
+			AM62X_IOPAD(0x1d8, PIN_OUTPUT, 7) /* (C15) MCAN0_TX */
+		>;
+	};
+
 
 	main_mmc1_pins_default: main-mmc1-pins-default {
 		pinctrl-single,pins = <

@@ -14,3 +14,6 @@
     ```bash
     cp arch/arm64/boot/dts/ti/k3*am*var-som*.dtb $WORKDIR/rootfs/boot/dtb/
     ```
+
+3. copy using scp to module:
+    `scp arch/arm64/boot/dts/slice/k3-am625-var-som-slice-luxomed.dtb root@192.168.1.113:/boot/dtb/k3-am625-var-som-symphony.dtb`
