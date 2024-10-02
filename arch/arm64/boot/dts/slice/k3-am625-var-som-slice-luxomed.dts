@@ -32,7 +32,9 @@
 
 	backlight: backlight {
 		compatible = "pwm-backlight";
-		pwms = <&epwm1 0 1000000 PWM_POLARITY_NORMAL>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&main_epwm1_pins_default>;
+		pwms = <&epwm1 0 1000000 PWM_POLARITY_NORMAL>; //0 channel A
 		status = "okay";
 		brightness-levels = < 0  1  2  3  4  5  6  7  8  9
 				      10 11 12 13 14 15 16 17 18 19
@@ -53,14 +55,8 @@
 		bootargs = "console=ttyS0,115200n8 earlycon=ns16550a,mmio32,0x02800000";
 	};
 
-	// clk_ov5640_fixed: clock {
-	// 	#clock-cells = <0>;
-	// 	compatible = "fixed-clock";
-	// 	clock-frequency = <24000000>;
-	// };
-
 	display {
-		compatible = "sgd,gktw70sdae4se";
+		compatible = "avnet,ama101a07";
 		backlight = <&backlight>;
 		status = "okay";
 
@@ -72,7 +68,7 @@
 	};
 
 	// display1 {
-	// 	compatible = "sgd,gktw70sdae4se";
+	// 	compatible = "avnet,ama101a07";
 	// 	status = "okay";
 	// 	port@1 {
 	// 			lcd_in1: endpoint {
@@ -118,14 +114,18 @@
 		};
 	};
 
-	// ov5640_buf_en: ov5640-buf-en {
-	// 	compatible = "regulator-fixed";
-	// 	regulator-name = "ov5640_buf_en";
-	// 	gpios = <&main_gpio0 21 GPIO_ACTIVE_HIGH>;
-	// 	regulator-always-on;
-	// 	regulator-boot-on;
-	// 	status="okay";
-	// };
+	epwm_buzzer {
+		compatible = "pwm-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&buzzer_pwm_c>;
+
+		led1 {
+			label = "pwm_led_1";
+			pwms = <&epwm1 1 1000000 PWM_POLARITY_NORMAL>; //0 channel B
+			max-brightness = <255>;   /* Maximum brightness */
+			default-brightness = <128>; /* Default brightness */
+		};
+	};
 
 	vdd_mmc1: regulator-3 {
 		compatible = "regulator-fixed";
@@ -153,22 +153,11 @@
 				 <3300000 0x1>;
 		status="okay";
 	};
-
-	// transceiver1: can-phy0 {
-	// 	compatible = "ti,tcan1042";
-	// 	#phy-cells = <0>;
-	// 	max-bitrate = <5000000>;
-	// };
-
-	// hellokeys{
-	// 	compatible = "arrow,hellokeys";
-	// };
 };
 
 &cpsw3g {
 	status = "okay";
 	pinctrl-names = "default";
-	// pinctrl-0 = <&main_rgmii1_pins_default &main_rgmii2_pins_default>;
 	pinctrl-0 = <&main_rgmii1_pins_default>;
 
 	cpts@3d000 {
@@ -177,35 +166,9 @@
 	};
 };
 
-&cpsw3g_mdio {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_mdio1_pins_default>;
-	cpsw3g_phy1: ethernet-phy@5 {
-		// reg = <5>;
-		// compatible = "ethernet-phy-id0283.bc30";
-		// reset-gpios = <&pca9534 5 GPIO_ACTIVE_LOW>;
-		// reset-assert-us = <10000>;
-		// reset-deassert-us = <20000>;
-	};
-};
-
 &cpsw_port2 {
-	phy-mode = "rgmii";
-	phy-handle = <&cpsw3g_phy1>;
 	status = "disabled";
 };
-
-// &csi0_port0 {
-// 	status = "okay";
-
-// 	csi2rx0_in_sensor: endpoint {
-// 		remote-endpoint = <&csi2_cam0>;
-// 		bus-type = <4>; /* CSI2 DPHY. */
-// 		clock-lanes = <0>;
-// 		data-lanes = <1 2>;
-// 	};
-// };
 
 &dphy0 {
 	status = "okay";
@@ -240,7 +203,6 @@
 &epwm1 {
 	status = "okay";
 	pinctrl-names = "default";
-	pinctrl-0 = <&main_epwm1_pins_default>;
 };
 
 &mailbox0_cluster0 {
@@ -254,13 +216,6 @@
 		ti,mbox-tx = <3 0 0>;
 	};
 };
-
-// &main_mcan0 {
-// 	status = "okay";
-// 	pinctrl-names = "default";
-// 	pinctrl-0 = <&main_mcan0_pins_default>;
-// 	phys = <&transceiver1>;
-// };
 
 &main_i2c0{
 	status = "okay";
@@ -302,28 +257,6 @@
 		// 	line-name = "eth-mdio-enable";
 		// };
 	};
-
-	// ov5640: camera@3c {
-	// 	compatible = "ovti,ov5640";
-	// 	reg = <0x3c>;
-
-	// 	clocks = <&clk_ov5640_fixed>;
-	// 	clock-names = "xclk";
-
-	// 	powerdown-gpios = <&main_gpio0 10 GPIO_ACTIVE_HIGH>;
-	// 	reset-gpios = <&main_gpio0 22 GPIO_ACTIVE_LOW>;
-
-	// 	pinctrl-names = "default";
-	// 	pinctrl-0 = <&ov5640_pins_default>;
-
-	// 	port {
-	// 		csi2_cam0: endpoint {
-	// 			remote-endpoint = <&csi2rx0_in_sensor>;
-	// 			clock-lanes = <0>;
-	// 			data-lanes = <1 2>;
-	// 		};
-	// 	};
-	// };
 };
 
 &main_i2c1 {
@@ -338,41 +271,10 @@
 		reg = <0x68>;
 		status = "okay";
 	};
-
-	/* Capacitive touch controller */
-	ft5x06_ts: ft5x06_ts@38 {
-		compatible = "edt,edt-ft5206";
-		reg = <0x38>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&captouch_pins_default>;
-		interrupts-extended = <&main_gpio1 16 IRQ_TYPE_EDGE_FALLING>,
-							  <&main_pmx0 0x1B8>;
-		interrupt-names = "irq", "wakeup";
-		touchscreen-size-x = <800>;
-		touchscreen-size-y = <480>;
-		touchscreen-inverted-x;
-		touchscreen-inverted-y;
-		wakeup-source;
-		status = "okay";
-	};
 };
-
-// /* Voltage reference node */
-// vref-ads: regulator-vref {
-//     compatible = "regulator-fixed";
-//     regulator-name = "vref-ads";
-//     regulator-min-microvolt = <2500000>; /* 2.5V reference voltage */
-//     regulator-max-microvolt = <2500000>;
-// };
 
 // I2C#B
 &main_i2c2 {
-	// ALREADY DEFINED IN k"-am625-var-som.dtsi
-	// pinctrl-names = "default";
-	// pinctrl-0 = <&main_i2c2_pins_default>;
-	// clock-frequency = <400000>;
-	// status = "okay";
-
 	// ti,ads7828
 	ads7828@48 {
 		compatible = "ti,ads7828";
@@ -382,19 +284,12 @@
 		ti,vref_mv = <2500>;
 
 		status = "okay";
-
 	};
 };
 
 &main_pmx0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&mgc3030_pins_default>;
-
-	captouch_pins_default: captouch-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x01b8, PIN_INPUT, 7) /* (C13) SPI0_CS1.GPIO1_16 */
-		>;
-	};
+	pinctrl-0 = <&mygpio1_pins_default &mygpio2_pins_default>;
 
 	extcon_pins_default: extcon-pins-default {
 		pinctrl-single,pins = <
@@ -408,10 +303,29 @@
 		>;
 	};
 
+	buzzer_pwm_c: main-epwm1-buzzer_pwm_c-default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x01a0, PIN_INPUT, 6) /* (D18) MCASP0_AXR0.EHRPWM1_B */
+		>;
+	};
+
 	main_i2c0_pins_default: main-i2c0-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x1e0, PIN_INPUT_PULLUP, 0) /* (B16) I2C0_SCL */
 			AM62X_IOPAD(0x1e4, PIN_INPUT_PULLUP, 0) /* (A16) I2C0_SDA */
+		>;
+	};
+
+	/*Added by ES*/
+	mygpio1_pins_default: mygpio1-default-pins {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x0244, PIN_INPUT, 7) /* (B15) MMC1_SDWP.GPIO1_49 */
+		>;
+	};
+	/*Added by ES*/
+	mygpio2_pins_default: mygpio2-default-pins {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x009c, PIN_INPUT, 7) /* (P17) GPMC0_WAIT1.GPIO0_38 */
 		>;
 	};
 
@@ -421,21 +335,6 @@
 			AM62X_IOPAD(0x1ec, PIN_INPUT_PULLUP, 0) /* (A17) I2C1_SDA */
 		>;
 	};
-
-	// main_mcan0_pins_default: main-mcan0-pins-default {
-	// 	pinctrl-single,pins = <
-	// 		AM62X_IOPAD(0x1dc, PIN_INPUT, 0) /* (E15) MCAN0_RX */
-	// 		AM62X_IOPAD(0x1d8, PIN_OUTPUT, 0) /* (C15) MCAN0_TX */
-	// 	>;
-	// };
-
-	mgc3030_pins_default: mgc3030-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x1dc, PIN_OUTPUT, 7) /* (E15) MCAN0_RX */
-			AM62X_IOPAD(0x1d8, PIN_OUTPUT, 7) /* (C15) MCAN0_TX */
-		>;
-	};
-
 
 	main_mmc1_pins_default: main-mmc1-pins-default {
 		pinctrl-single,pins = <
@@ -474,23 +373,6 @@
 		>;
 	};
 
-	// main_rgmii2_pins_default: main-rgmii2-pins-default {
-	// 	pinctrl-single,pins = <
-	// 		AM62X_IOPAD(0x184, PIN_INPUT, 0) /* (AE23) RGMII2_RD0 */
-	// 		AM62X_IOPAD(0x188, PIN_INPUT, 0) /* (AB20) RGMII2_RD1 */
-	// 		AM62X_IOPAD(0x18c, PIN_INPUT, 0) /* (AC21) RGMII2_RD2 */
-	// 		AM62X_IOPAD(0x190, PIN_INPUT, 0) /* (AE22) RGMII2_RD3 */
-	// 		AM62X_IOPAD(0x180, PIN_INPUT, 0) /* (AD23) RGMII2_RXC */
-	// 		AM62X_IOPAD(0x17c, PIN_INPUT, 0) /* (AD22) RGMII2_RX_CTL */
-	// 		AM62X_IOPAD(0x16c, PIN_INPUT, 0) /* (Y18) RGMII2_TD0 */
-	// 		AM62X_IOPAD(0x170, PIN_INPUT, 0) /* (AA18) RGMII2_TD1 */
-	// 		AM62X_IOPAD(0x174, PIN_INPUT, 0) /* (AD21) RGMII2_TD2 */
-	// 		AM62X_IOPAD(0x178, PIN_INPUT, 0) /* (AC20) RGMII2_TD3 */
-	// 		AM62X_IOPAD(0x168, PIN_INPUT_PULLDOWN, 0) /* (AE21) RGMII2_TXC */
-	// 		AM62X_IOPAD(0x164, PIN_INPUT, 0) /* (AA19) RGMII2_TX_CTL */
-	// 	>;
-	// };
-
 	main_spi2_pins_default: main_spi2-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x01b0, PIN_INPUT, 1) /* (A20) MCASP0_ACLKR.SPI2_CLK */
@@ -514,26 +396,11 @@
 		>;
 	};
 
-	main_uart6_pins_default: main-uart6-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x009c, PIN_INPUT, 3) /* (V25) GPMC0_WAIT1.UART6_RXD */
-			AM62X_IOPAD(0x0244, PIN_OUTPUT, 1) /* (C17) MMC1_SDWP.UART6_TXD */
-		>;
-	};
-
 	main_usb1_pins_default: main-usb1-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */
 		>;
 	};
-
-	// ov5640_pins_default: ov5640-pins-default {
-	// 	pinctrl-single,pins = <
-	// 		AM62X_IOPAD(0x0028, PIN_OUTPUT, 7) /* (J22) OSPI0_D7.GPIO0_10 */
-	// 		AM62X_IOPAD(0x0054, PIN_OUTPUT, 7) /* (P21) GPMC0_AD6.GPIO0_21 */
-	// 		AM62X_IOPAD(0x0058, PIN_OUTPUT, 7) /* (R23) GPMC0_AD7.GPIO0_22 */
-	// 	>;
-	// };
 
 	pca9534_irq_default: pca9534_irq_default {
 		pinctrl-single,pins = <
@@ -587,9 +454,7 @@
 };
 
 &main_uart6 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_uart6_pins_default>;
-	status = "okay";
+	status = "disabled";
 };
 
 &mcu_gpio0 {

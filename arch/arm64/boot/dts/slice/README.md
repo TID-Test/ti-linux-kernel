@@ -3,7 +3,7 @@
 1. run the following:
 
     ```bash
-    export WORKDIR=~/am62x-var-som-linux
+    export WORKDIR=~/docker-yocto-build/luxomed/am62x-var-som-linux
     export PATH=$HOME/arm-gnu-toolchain-11.3.rel1-x86_64-aarch64-none-linux-gnu/bin:$PATH
     cd $WORKDIR/ti-linux-kernel
     make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- -j$(nproc) dtbs
