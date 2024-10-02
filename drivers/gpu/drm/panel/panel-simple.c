@@ -3484,6 +3484,35 @@ static const struct panel_desc sgd_gktw70sdae4se = {
 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
 };
 
+static const struct drm_display_mode avnet_ama101a07_mode = {
+	.clock = 71428,
+	.hdisplay = 1280,
+	.hsync_start = 1280 + 48,
+	.hsync_end = 1280 + 48 + 64,
+	.htotal = 1280 + 48 + 64 + 48,
+	.vdisplay = 800,
+	.vsync_start = 800 + 10,
+	.vsync_end = 800 + 10 + 4,
+	.vtotal = 800 + 10 + 4 + 10,
+};
+
+static const struct panel_desc avnet_ama101a07 = {
+	.modes = &avnet_ama101a07_mode,
+	.bpc = 8,
+	.num_modes = 1,
+	.size = {
+		.width = 261,
+		.height = 163,
+	},
+	.delay = {
+		.prepare = 60,
+		.disable = 60,
+	},
+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
+	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
+	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+};
+
 
 static const struct drm_display_mode sharp_lq070y3dg3b_mode = {
 	.clock = 33260,
@@ -4408,6 +4437,9 @@ static const struct of_device_id platform_of_match[] = {
 	}, {
 		.compatible = "sgd,gktw70sdae4se",
 		.data = &sgd_gktw70sdae4se,
+	}, {
+		.compatible = "avnet,ama101a07",
+		.data = &avnet_ama101a07,
 	}, {
 		.compatible = "sharp,lq035q7db03",
 		.data = &sharp_lq035q7db03,
