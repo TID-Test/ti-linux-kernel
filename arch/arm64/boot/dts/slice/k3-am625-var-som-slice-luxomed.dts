@@ -80,27 +80,21 @@
 	gpio-keys {
 		compatible = "gpio-keys";
 		status = "okay";
-		// back {
-		// 	label = "Back";
-		// 	linux,code = <KEY_BACK>;
-		// 	gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
-		// 	wakeup-source;
-		// };
-
-		home {
-			label = "Home";
-			// linux,code = <KEY_HOME>;
-			linux,code = <123>;
-			gpios = <&pca9534 2 GPIO_ACTIVE_LOW>;
+		back {
+			label = "Back";
+			linux,code = <96>;//enter
+			gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
 			wakeup-source;
+			
 		};
 
-		// menu {
-		// 	label = "Menu";
-		// 	linux,code = <KEY_MENU>;
-		// 	gpios = <&pca9534 3 GPIO_ACTIVE_LOW>;
-		// 	wakeup-source;
-		// };
+		stylus {
+			label = "Stylus";
+			linux,code = <103>;//cursor up
+			gpios = <&main_gpio1 49 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+		};
 	};
 
 	gpio-leds {
@@ -112,6 +106,12 @@
 			linux,default-trigger = "heartbeat";
 			gpios = <&pca9534 0 GPIO_ACTIVE_LOW>;
 		};
+
+		treatment_led {
+            label = "treatment-led";                 // Label for the LED
+            gpios = <&main_gpio0 38 GPIO_ACTIVE_LOW>;// GPIO0 pin 38 (active low PNP)
+            default-state = "off";                   // Initial state
+        };
 	};
 
 	epwm_buzzer {
@@ -119,8 +119,8 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&buzzer_pwm_c>;
 
-		led1 {
-			label = "pwm_led_1";
+		buzzer {
+			label = "pwm_buzzer";
 			pwms = <&epwm1 1 1000000 PWM_POLARITY_NORMAL>; //0 channel B
 			max-brightness = <255>;   /* Maximum brightness */
 			default-brightness = <128>; /* Default brightness */
@@ -235,27 +235,6 @@
 		#gpio-cells = <2>;
 		wakeup-source;
 		status = "okay";
-
-		// usb3_sel_hog {
-		// 	gpio-hog;
-		// 	gpios = <4 0>;
-		// 	output-low;
-		// 	line-name = "usb3_sel";
-		// };
-
-		// eth_som_vselect_hog {
-		// 	gpio-hog;
-		// 	gpios = <6 0>;
-		// 	output-low;
-		// 	line-name = "eth-vselect";
-		// };
-
-		// eth_mdio_enable_hog {
-		// 	gpio-hog;
-		// 	gpios = <7 0>;
-		// 	output-high;
-		// 	line-name = "eth-mdio-enable";
-		// };
 	};
 };
 
@@ -289,7 +268,7 @@
 
 &main_pmx0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&mygpio1_pins_default &mygpio2_pins_default>;
+	pinctrl-0 = <&button_pins_default &treatment_led_pins_default>;
 
 	extcon_pins_default: extcon-pins-default {
 		pinctrl-single,pins = <
@@ -317,13 +296,13 @@
 	};
 
 	/*Added by ES*/
-	mygpio1_pins_default: mygpio1-default-pins {
+	button_pins_default: button-default-pins {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0244, PIN_INPUT, 7) /* (B15) MMC1_SDWP.GPIO1_49 */
 		>;
 	};
 	/*Added by ES*/
-	mygpio2_pins_default: mygpio2-default-pins {
+	treatment_led_pins_default: treatment_led-default-pins {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x009c, PIN_INPUT, 7) /* (P17) GPMC0_WAIT1.GPIO0_38 */
 		>;
