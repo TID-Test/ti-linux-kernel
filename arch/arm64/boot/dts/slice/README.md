@@ -17,3 +17,10 @@
 
 3. copy using scp to module:
     `scp arch/arm64/boot/dts/slice/k3-am625-var-som-slice-luxomed.dtb root@192.168.1.113:/boot/dtb/k3-am625-var-som-symphony.dtb`
+
+
+## N.B.: Get rid of dirty word in kernel:
+```bash
+$ git add
+$ git commit -s -a -m "getting rid of -dirty"
+```
