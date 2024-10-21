@@ -18,9 +18,9 @@
 	aliases {
 		ethernet0 = &cpsw_port1;
 		ethernet1 = &cpsw_port2;
-		mmc0 = &sdhci0;
-		mmc1 = &sdhci1;
-		mmc2 = &sdhci2;
+		mmc0 = &sdhci0;//eMMC
+		mmc1 = &sdhci1;//sd card
+		mmc2 = &sdhci2;//wifi
 		serial0 = &main_uart0;
 		serial2 = &main_uart2;
 		serial5 = &main_uart5;
@@ -375,6 +375,13 @@
 		>;
 	};
 
+	main_uart6_pins_default: main-uart6-pins-default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x009c, PIN_INPUT, 3) /* (V25) GPMC0_WAIT1.UART6_RXD */
+			AM62X_IOPAD(0x0244, PIN_OUTPUT, 1) /* (C17) MMC1_SDWP.UART6_TXD */
+		>;
+	};
+
 	main_usb1_pins_default: main-usb1-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */
@@ -433,7 +440,9 @@
 };
 
 &main_uart6 {
-	status = "disabled";
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_uart6_pins_default>;
+	status = "okay";
 };
 
 &mcu_gpio0 {
@@ -472,8 +481,9 @@
 	status="okay";
 };
 
+/* CSI2RX subsystem facilitates the capture of camera frames */
 &ti_csi2rx0 {
-	status = "okay";
+	status = "disabled";
 };
 
 #define K3_TS_OFFSET(pa, val)	(0x4+(pa)*4) (0x10000 | val)
