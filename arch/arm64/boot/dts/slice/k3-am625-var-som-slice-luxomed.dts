@@ -375,13 +375,6 @@
 		>;
 	};
 
-	main_uart6_pins_default: main-uart6-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x009c, PIN_INPUT, 3) /* (V25) GPMC0_WAIT1.UART6_RXD */
-			AM62X_IOPAD(0x0244, PIN_OUTPUT, 1) /* (C17) MMC1_SDWP.UART6_TXD */
-		>;
-	};
-
 	main_usb1_pins_default: main-usb1-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */
@@ -439,10 +432,9 @@
 	status = "okay";
 };
 
+//pins are used for luxomed
 &main_uart6 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_uart6_pins_default>;
-	status = "okay";
+	status = "disabled";
 };
 
 &mcu_gpio0 {
