@@ -397,6 +397,10 @@
 		>;
 	};
 
+	main_usb0_pins_default: main-usb0-pins-default {
+		pinctrl-single,pins = <AM62X_IOPAD(0x0254, PIN_OUTPUT, 0) /* (C20) USB0_DRVVBUS */>;
+	};
+
 	main_usb1_pins_default: main-usb1-pins-default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */>;
 	};
@@ -507,19 +511,26 @@
 	};
 };
 
+// &usb0 {
+	//     #address-cells = <1>;
+	//     #size-cells = <0>;
+	//     usb-role-switch;
+	//     status = "okay";
+
+	//     port@0 {
+		//         reg = <0>;
+
+		//         typec_hs: endpoint {
+			//             remote-endpoint = <&usb_con_hs>;
+		//         };
+	//     };
+// };
+
 &usb0 {
-	#address-cells = <1>;
-	#size-cells = <0>;
-	usb-role-switch;
+	dr_mode = "host";
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_usb0_pins_default>;
 	status = "okay";
-
-	port@0 {
-		reg = <0>;
-
-		typec_hs: endpoint {
-			remote-endpoint = <&usb_con_hs>;
-		};
-	};
 };
 
 &usb1 {
@@ -529,30 +540,34 @@
 	status = "okay";
 };
 
+// &usbss0 {
+	//     status = "okay";
+
+	//     connector {
+		//         compatible = "gpio-usb-b-connector","usb-c-connector";
+		//         pinctrl-names = "default";
+		//         pinctrl-0 = <&extcon_pins_default>;
+		//         label = "USB-C";
+		//         id-gpios = <&main_gpio1 12 GPIO_ACTIVE_HIGH>;
+		//         status = "okay";
+
+		//         ports {
+			//             #address-cells = <1>;
+			//             #size-cells = <0>;
+
+			//             port@0 {
+				//                 reg = <0>;
+
+				//                 usb_con_hs: endpoint {
+					//                     remote-endpoint = <&typec_hs>;
+				//                 };
+			//             };
+		//         };
+	//     };
+// };
+
 &usbss0 {
 	status = "okay";
-
-	connector {
-		compatible = "gpio-usb-b-connector","usb-c-connector";
-		pinctrl-names = "default";
-		pinctrl-0 = <&extcon_pins_default>;
-		label = "USB-C";
-		id-gpios = <&main_gpio1 12 GPIO_ACTIVE_HIGH>;
-		status = "okay";
-
-		ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			port@0 {
-				reg = <0>;
-
-				usb_con_hs: endpoint {
-					remote-endpoint = <&typec_hs>;
-				};
-			};
-		};
-	};
 };
 
 &usbss1 {
