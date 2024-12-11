@@ -121,9 +121,9 @@
 
 		buzzer {
 			label = "pwm_buzzer";
-			pwms = <&epwm1 1 1000000 PWM_POLARITY_NORMAL>; //0 channel B
+			pwms = <&epwm1 1 416666 PWM_POLARITY_NORMAL>; //0 channel B //416666=>2400Hz
 			max-brightness = <255>;   /* Maximum brightness */
-			default-brightness = <128>; /* Default brightness */
+			default-brightness = <0>; /* Default brightness */
 		};
 	};
 
