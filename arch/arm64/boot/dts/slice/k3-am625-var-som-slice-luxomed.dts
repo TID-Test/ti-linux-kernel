@@ -177,6 +177,10 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&ecap2_pins_default>;
 	};
+
+	sound-wm8904 {
+		status = "disabled";
+	};
 };
 
 &cpsw3g {
@@ -287,6 +291,10 @@
 		ti,vref_mv = <2500>;
 
 		status = "okay";
+	};
+
+	wm8904 {
+		status = "disabled";
 	};
 };
 
