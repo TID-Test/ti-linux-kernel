@@ -163,8 +163,9 @@ static inline struct panel_simple *to_panel_simple(struct drm_panel *panel)
 	return container_of(panel, struct panel_simple, base);
 }
 
-static unsigned int panel_simple_get_timings_modes(struct panel_simple *panel,
-						   struct drm_connector *connector)
+static unsigned int
+panel_simple_get_timings_modes(struct panel_simple *panel,
+			       struct drm_connector *connector)
 {
 	struct drm_display_mode *mode;
 	unsigned int i, num = 0;
@@ -195,8 +196,9 @@ static unsigned int panel_simple_get_timings_modes(struct panel_simple *panel,
 	return num;
 }
 
-static unsigned int panel_simple_get_display_modes(struct panel_simple *panel,
-						   struct drm_connector *connector)
+static unsigned int
+panel_simple_get_display_modes(struct panel_simple *panel,
+			       struct drm_connector *connector)
 {
 	struct drm_display_mode *mode;
 	unsigned int i, num = 0;
@@ -206,9 +208,9 @@ static unsigned int panel_simple_get_display_modes(struct panel_simple *panel,
 
 		mode = drm_mode_duplicate(connector->dev, m);
 		if (!mode) {
-			dev_err(panel->base.dev, "failed to add mode %ux%u@%u\n",
-				m->hdisplay, m->vdisplay,
-				drm_mode_vrefresh(m));
+			dev_err(panel->base.dev,
+				"failed to add mode %ux%u@%u\n", m->hdisplay,
+				m->vdisplay, drm_mode_vrefresh(m));
 			continue;
 		}
 
@@ -243,7 +245,8 @@ static int panel_simple_get_non_edid_modes(struct panel_simple *panel,
 			drm_mode_probed_add(connector, mode);
 			num = 1;
 		} else {
-			dev_err(panel->base.dev, "failed to add override mode\n");
+			dev_err(panel->base.dev,
+				"failed to add override mode\n");
 		}
 	}
 
@@ -440,7 +443,8 @@ static int panel_simple_get_timings(struct drm_panel *panel,
 	return p->desc->num_timings;
 }
 
-static enum drm_panel_orientation panel_simple_get_orientation(struct drm_panel *panel)
+static enum drm_panel_orientation
+panel_simple_get_orientation(struct drm_panel *panel)
 {
 	struct panel_simple *p = to_panel_simple(panel);
 
@@ -459,8 +463,7 @@ static const struct drm_panel_funcs panel_simple_funcs = {
 
 static struct panel_desc panel_dpi;
 
-static int panel_dpi_probe(struct device *dev,
-			   struct panel_simple *panel)
+static int panel_dpi_probe(struct device *dev, struct panel_simple *panel)
 {
 	struct display_timing *timing;
 	const struct device_node *np;
@@ -480,7 +483,8 @@ static int panel_dpi_probe(struct device *dev,
 
 	ret = of_get_display_timing(np, "panel-timing", timing);
 	if (ret < 0) {
-		dev_err(dev, "%pOF: no panel-timing node found for \"panel-dpi\" binding\n",
+		dev_err(dev,
+			"%pOF: no panel-timing node found for \"panel-dpi\" binding\n",
 			np);
 		return ret;
 	}
@@ -506,11 +510,12 @@ static int panel_dpi_probe(struct device *dev,
 }
 
 #define PANEL_SIMPLE_BOUNDS_CHECK(to_check, bounds, field) \
-	(to_check->field.typ >= bounds->field.min && \
+	(to_check->field.typ >= bounds->field.min &&       \
 	 to_check->field.typ <= bounds->field.max)
-static void panel_simple_parse_panel_timing_node(struct device *dev,
-						 struct panel_simple *panel,
-						 const struct display_timing *ot)
+static void
+panel_simple_parse_panel_timing_node(struct device *dev,
+				     struct panel_simple *panel,
+				     const struct display_timing *ot)
 {
 	const struct panel_desc *desc = panel->desc;
 	struct videomode vm;
@@ -573,15 +578,16 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
 	if (IS_ERR(panel->supply))
 		return PTR_ERR(panel->supply);
 
-	panel->enable_gpio = devm_gpiod_get_optional(dev, "enable",
-						     GPIOD_OUT_LOW);
+	panel->enable_gpio =
+		devm_gpiod_get_optional(dev, "enable", GPIOD_OUT_LOW);
 	if (IS_ERR(panel->enable_gpio))
 		return dev_err_probe(dev, PTR_ERR(panel->enable_gpio),
 				     "failed to request GPIO\n");
 
 	err = of_drm_get_panel_orientation(dev->of_node, &panel->orientation);
 	if (err) {
-		dev_err(dev, "%pOF: failed to get orientation %d\n", dev->of_node, err);
+		dev_err(dev, "%pOF: failed to get orientation %d\n",
+			dev->of_node, err);
 		return err;
 	}
 
@@ -614,8 +620,7 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
 		break;
 	case DRM_MODE_CONNECTOR_LVDS:
 		WARN_ON(desc->bus_flags &
-			~(DRM_BUS_FLAG_DE_LOW |
-			  DRM_BUS_FLAG_DE_HIGH |
+			~(DRM_BUS_FLAG_DE_LOW | DRM_BUS_FLAG_DE_HIGH |
 			  DRM_BUS_FLAG_DATA_MSB_TO_LSB |
 			  DRM_BUS_FLAG_DATA_LSB_TO_MSB));
 		WARN_ON(desc->bus_format != MEDIA_BUS_FMT_RGB666_1X7X3_SPWG &&
@@ -624,7 +629,8 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
 		WARN_ON(desc->bus_format == MEDIA_BUS_FMT_RGB666_1X7X3_SPWG &&
 			desc->bpc != 6);
 		WARN_ON((desc->bus_format == MEDIA_BUS_FMT_RGB888_1X7X4_SPWG ||
-			 desc->bus_format == MEDIA_BUS_FMT_RGB888_1X7X4_JEIDA) &&
+			 desc->bus_format ==
+				 MEDIA_BUS_FMT_RGB888_1X7X4_JEIDA) &&
 			desc->bpc != 8);
 		break;
 	case DRM_MODE_CONNECTOR_eDP:
@@ -633,11 +639,11 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
 		goto free_ddc;
 	case DRM_MODE_CONNECTOR_DSI:
 		if (desc->bpc != 6 && desc->bpc != 8)
-			dev_warn(dev, "Expected bpc in {6,8} but got: %u\n", desc->bpc);
+			dev_warn(dev, "Expected bpc in {6,8} but got: %u\n",
+				 desc->bpc);
 		break;
 	case DRM_MODE_CONNECTOR_DPI:
-		bus_flags = DRM_BUS_FLAG_DE_LOW |
-			    DRM_BUS_FLAG_DE_HIGH |
+		bus_flags = DRM_BUS_FLAG_DE_LOW | DRM_BUS_FLAG_DE_HIGH |
 			    DRM_BUS_FLAG_PIXDATA_SAMPLE_POSEDGE |
 			    DRM_BUS_FLAG_PIXDATA_SAMPLE_NEGEDGE |
 			    DRM_BUS_FLAG_DATA_MSB_TO_LSB |
@@ -645,16 +651,19 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
 			    DRM_BUS_FLAG_SYNC_SAMPLE_POSEDGE |
 			    DRM_BUS_FLAG_SYNC_SAMPLE_NEGEDGE;
 		if (desc->bus_flags & ~bus_flags)
-			dev_warn(dev, "Unexpected bus_flags(%d)\n", desc->bus_flags & ~bus_flags);
+			dev_warn(dev, "Unexpected bus_flags(%d)\n",
+				 desc->bus_flags & ~bus_flags);
 		if (!(desc->bus_flags & bus_flags))
 			dev_warn(dev, "Specify missing bus_flags\n");
 		if (desc->bus_format == 0)
 			dev_warn(dev, "Specify missing bus_format\n");
 		if (desc->bpc != 6 && desc->bpc != 8)
-			dev_warn(dev, "Expected bpc in {6,8} but got: %u\n", desc->bpc);
+			dev_warn(dev, "Expected bpc in {6,8} but got: %u\n",
+				 desc->bpc);
 		break;
 	default:
-		dev_warn(dev, "Specify a valid connector_type: %d\n", desc->connector_type);
+		dev_warn(dev, "Specify a valid connector_type: %d\n",
+			 desc->connector_type);
 		connector_type = DRM_MODE_CONNECTOR_DPI;
 		break;
 	}
@@ -800,8 +809,8 @@ static const struct display_timing ampire_am800600p5tmqw_tb8h_timing = {
 	.vback_porch = { 38, 38, 19 },
 	.vsync_len = { 1, 1, 20 },
 	.flags = DISPLAY_FLAGS_HSYNC_LOW | DISPLAY_FLAGS_VSYNC_LOW |
-		DISPLAY_FLAGS_DE_HIGH | DISPLAY_FLAGS_PIXDATA_POSEDGE |
-		DISPLAY_FLAGS_SYNC_POSEDGE,
+		 DISPLAY_FLAGS_DE_HIGH | DISPLAY_FLAGS_PIXDATA_POSEDGE |
+		 DISPLAY_FLAGS_SYNC_POSEDGE,
 };
 
 static const struct panel_desc ampire_am800600p5tmqwtb8h = {
@@ -830,7 +839,7 @@ static const struct display_timing santek_st0700i5y_rbslw_f_timing = {
 	.vback_porch = { 22, 13, 3 },
 	.vsync_len = { 1, 10, 20 },
 	.flags = DISPLAY_FLAGS_HSYNC_LOW | DISPLAY_FLAGS_VSYNC_LOW |
-		DISPLAY_FLAGS_DE_HIGH | DISPLAY_FLAGS_PIXDATA_POSEDGE
+		 DISPLAY_FLAGS_DE_HIGH | DISPLAY_FLAGS_PIXDATA_POSEDGE
 };
 
 static const struct panel_desc armadeus_st0700_adapt = {
@@ -1759,7 +1768,7 @@ static const struct display_timing edt_etml0700y5dha_timing = {
 	.hback_porch = { 30, 106, 125 },
 	.hsync_len = { 30, 108, 126 },
 	.vactive = { 600, 600, 600 },
-	.vfront_porch = { 3, 12, 67},
+	.vfront_porch = { 3, 12, 67 },
 	.vback_porch = { 3, 12, 67 },
 	.vsync_len = { 4, 11, 66 },
 	.flags = DISPLAY_FLAGS_HSYNC_LOW | DISPLAY_FLAGS_VSYNC_LOW |
@@ -1882,7 +1891,8 @@ static const struct panel_desc foxlink_fl500wvr00_a0t = {
 };
 
 static const struct drm_display_mode frida_frd350h54004_modes[] = {
-	{ /* 60 Hz */
+	{
+		/* 60 Hz */
 		.clock = 6000,
 		.hdisplay = 320,
 		.hsync_start = 320 + 44,
@@ -1894,7 +1904,8 @@ static const struct drm_display_mode frida_frd350h54004_modes[] = {
 		.vtotal = 240 + 2 + 6 + 2,
 		.flags = DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC,
 	},
-	{ /* 50 Hz */
+	{
+		/* 50 Hz */
 		.clock = 5400,
 		.hdisplay = 320,
 		.hsync_start = 320 + 56,
@@ -1922,16 +1933,16 @@ static const struct panel_desc frida_frd350h54004 = {
 };
 
 static const struct drm_display_mode friendlyarm_hd702e_mode = {
-	.clock		= 67185,
-	.hdisplay	= 800,
-	.hsync_start	= 800 + 20,
-	.hsync_end	= 800 + 20 + 24,
-	.htotal		= 800 + 20 + 24 + 20,
-	.vdisplay	= 1280,
-	.vsync_start	= 1280 + 4,
-	.vsync_end	= 1280 + 4 + 8,
-	.vtotal		= 1280 + 4 + 8 + 4,
-	.flags		= DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC,
+	.clock = 67185,
+	.hdisplay = 800,
+	.hsync_start = 800 + 20,
+	.hsync_end = 800 + 20 + 24,
+	.htotal = 800 + 20 + 24 + 20,
+	.vdisplay = 1280,
+	.vsync_start = 1280 + 4,
+	.vsync_end = 1280 + 4 + 8,
+	.vtotal = 1280 + 4 + 8 + 4,
+	.flags = DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC,
 };
 
 static const struct panel_desc friendlyarm_hd702e = {
@@ -2364,7 +2375,7 @@ static const struct display_timing koe_tx26d202vm0bwa_timing = {
 	.hfront_porch = { 105, 130, 142 },
 	.hback_porch = { 45, 70, 82 },
 	.hsync_len = { 30, 30, 30 },
-	.vactive = { 1200, 1200, 1200},
+	.vactive = { 1200, 1200, 1200 },
 	.vfront_porch = { 3, 5, 10 },
 	.vback_porch = { 2, 5, 10 },
 	.vsync_len = { 5, 5, 5 },
@@ -3090,7 +3101,7 @@ static const struct panel_desc ontat_yx700wv03 = {
 	.bus_format = MEDIA_BUS_FMT_RGB666_1X18,
 };
 
-static const struct drm_display_mode ortustech_com37h3m_mode  = {
+static const struct drm_display_mode ortustech_com37h3m_mode = {
 	.clock = 22230,
 	.hdisplay = 480,
 	.hsync_start = 480 + 40,
@@ -3116,7 +3127,7 @@ static const struct panel_desc ortustech_com37h3m = {
 		     DRM_BUS_FLAG_SYNC_DRIVE_POSEDGE,
 };
 
-static const struct drm_display_mode ortustech_com43h4m85ulc_mode  = {
+static const struct drm_display_mode ortustech_com43h4m85ulc_mode = {
 	.clock = 25000,
 	.hdisplay = 480,
 	.hsync_start = 480 + 10,
@@ -3141,7 +3152,7 @@ static const struct panel_desc ortustech_com43h4m85ulc = {
 	.connector_type = DRM_MODE_CONNECTOR_DPI,
 };
 
-static const struct drm_display_mode osddisplays_osd070t1718_19ts_mode  = {
+static const struct drm_display_mode osddisplays_osd070t1718_19ts_mode = {
 	.clock = 33000,
 	.hdisplay = 800,
 	.hsync_start = 800 + 210,
@@ -3241,7 +3252,8 @@ static const struct panel_desc qd43003c0_40 = {
 };
 
 static const struct drm_display_mode qishenglong_gopher2b_lcd_modes[] = {
-	{ /* 60 Hz */
+	{
+		/* 60 Hz */
 		.clock = 10800,
 		.hdisplay = 480,
 		.hsync_start = 480 + 77,
@@ -3253,7 +3265,8 @@ static const struct drm_display_mode qishenglong_gopher2b_lcd_modes[] = {
 		.vtotal = 272 + 16 + 10 + 2,
 		.flags = DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC,
 	},
-	{ /* 50 Hz */
+	{
+		/* 50 Hz */
 		.clock = 10800,
 		.hdisplay = 480,
 		.hsync_start = 480 + 17,
@@ -3432,15 +3445,15 @@ static const struct panel_desc samsung_ltn101nt05 = {
 };
 
 static const struct display_timing satoz_sat050at40h12r2_timing = {
-	.pixelclock = {33300000, 33300000, 50000000},
-	.hactive = {800, 800, 800},
-	.hfront_porch = {16, 210, 354},
-	.hback_porch = {46, 46, 46},
-	.hsync_len = {1, 1, 40},
-	.vactive = {480, 480, 480},
-	.vfront_porch = {7, 22, 147},
-	.vback_porch = {23, 23, 23},
-	.vsync_len = {1, 1, 20},
+	.pixelclock = { 33300000, 33300000, 50000000 },
+	.hactive = { 800, 800, 800 },
+	.hfront_porch = { 16, 210, 354 },
+	.hback_porch = { 46, 46, 46 },
+	.hsync_len = { 1, 1, 40 },
+	.vactive = { 480, 480, 480 },
+	.vfront_porch = { 7, 22, 147 },
+	.vback_porch = { 23, 23, 23 },
+	.vsync_len = { 1, 1, 20 },
 };
 
 static const struct panel_desc satoz_sat050at40h12r2 = {
@@ -3513,6 +3526,35 @@ static const struct panel_desc avnet_ama101a07 = {
 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
 };
 
+//LDS050WVLA07201C040A
+static const struct drm_display_mode lcdis_lds050wvla07201c040a_mode = {
+	.clock = 25000,
+	.hdisplay = 800,
+	.hsync_start = 800 + 8,
+	.hsync_end = 800 + 8 + 8,
+	.htotal = 800 + 8 + 8 + 4,
+	.vdisplay = 480,
+	.vsync_start = 480 + 8,
+	.vsync_end = 480 + 8 + 8,
+	.vtotal = 480 + 8 + 8 + 4,
+};
+
+static const struct panel_desc lcdis_lds050wvla07201c040a = {
+	.modes = &lcdis_lds050wvla07201c040a_mode,
+	.bpc = 8,
+	.num_modes = 1,
+	.size = {
+		.width = 154,
+		.height = 87,
+	},
+	.delay = {
+		.prepare = 60,
+		.disable = 60,
+	},
+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
+	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
+	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+};
 
 static const struct drm_display_mode sharp_lq070y3dg3b_mode = {
 	.clock = 33260,
@@ -3589,7 +3631,8 @@ static const struct panel_desc sharp_lq101k1ly04 = {
 };
 
 static const struct drm_display_mode sharp_ls020b1dd01d_modes[] = {
-	{ /* 50 Hz */
+	{
+		/* 50 Hz */
 		.clock = 3000,
 		.hdisplay = 240,
 		.hsync_start = 240 + 58,
@@ -3601,7 +3644,8 @@ static const struct drm_display_mode sharp_ls020b1dd01d_modes[] = {
 		.vtotal = 160 + 24 + 10 + 6,
 		.flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_NVSYNC,
 	},
-	{ /* 60 Hz */
+	{
+		/* 60 Hz */
 		.clock = 3000,
 		.hdisplay = 240,
 		.hsync_start = 240 + 8,
@@ -3960,7 +4004,7 @@ static const struct display_timing urt_umsh_8596md_timing = {
 	.vback_porch = { 35 - 2, 35 - 2, 35 - 2 },
 	.vsync_len = { 2, 2, 2 },
 	.flags = DISPLAY_FLAGS_DE_HIGH | DISPLAY_FLAGS_PIXDATA_NEGEDGE |
-		DISPLAY_FLAGS_HSYNC_LOW | DISPLAY_FLAGS_VSYNC_LOW,
+		 DISPLAY_FLAGS_HSYNC_LOW | DISPLAY_FLAGS_VSYNC_LOW,
 };
 
 static const struct panel_desc urt_umsh_8596md_lvds = {
@@ -4017,7 +4061,7 @@ static const struct drm_display_mode vl050_8048nt_c01_mode = {
 	.hsync_start = 800 + 210,
 	.hsync_end = 800 + 210 + 20,
 	.htotal = 800 + 210 + 20 + 46,
-	.vdisplay =  480,
+	.vdisplay = 480,
 	.vsync_start = 480 + 22,
 	.vsync_end = 480 + 22 + 10,
 	.vtotal = 480 + 22 + 10 + 23,
@@ -4060,18 +4104,19 @@ static const struct panel_desc winstar_wf35ltiacd = {
 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
 };
 
-static const struct drm_display_mode yes_optoelectronics_ytc700tlag_05_201c_mode = {
-	.clock = 51200,
-	.hdisplay = 1024,
-	.hsync_start = 1024 + 100,
-	.hsync_end = 1024 + 100 + 100,
-	.htotal = 1024 + 100 + 100 + 120,
-	.vdisplay = 600,
-	.vsync_start = 600 + 10,
-	.vsync_end = 600 + 10 + 10,
-	.vtotal = 600 + 10 + 10 + 15,
-	.flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC,
-};
+static const struct drm_display_mode
+	yes_optoelectronics_ytc700tlag_05_201c_mode = {
+		.clock = 51200,
+		.hdisplay = 1024,
+		.hsync_start = 1024 + 100,
+		.hsync_end = 1024 + 100 + 100,
+		.htotal = 1024 + 100 + 100 + 120,
+		.vdisplay = 600,
+		.vsync_start = 600 + 10,
+		.vsync_end = 600 + 10 + 10,
+		.vtotal = 600 + 10 + 10 + 15,
+		.flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC,
+	};
 
 static const struct panel_desc yes_optoelectronics_ytc700tlag_05_201c = {
 	.modes = &yes_optoelectronics_ytc700tlag_05_201c_mode,
@@ -4116,416 +4161,538 @@ static const struct of_device_id platform_of_match[] = {
 	{
 		.compatible = "ampire,am-1280800n3tzqw-t00h",
 		.data = &ampire_am_1280800n3tzqw_t00h,
-	}, {
+	},
+	{
 		.compatible = "ampire,am-480272h3tmqw-t01h",
 		.data = &ampire_am_480272h3tmqw_t01h,
-	}, {
+	},
+	{
 		.compatible = "ampire,am800480r3tmqwa1h",
 		.data = &ampire_am800480r3tmqwa1h,
-	}, {
+	},
+	{
 		.compatible = "ampire,am800600p5tmqw-tb8h",
 		.data = &ampire_am800600p5tmqwtb8h,
-	}, {
+	},
+	{
 		.compatible = "arm,rtsm-display",
 		.data = &arm_rtsm,
-	}, {
+	},
+	{
 		.compatible = "armadeus,st0700-adapt",
 		.data = &armadeus_st0700_adapt,
-	}, {
+	},
+	{
 		.compatible = "auo,b101aw03",
 		.data = &auo_b101aw03,
-	}, {
+	},
+	{
 		.compatible = "auo,b101xtn01",
 		.data = &auo_b101xtn01,
-	}, {
+	},
+	{
 		.compatible = "auo,g070vvn01",
 		.data = &auo_g070vvn01,
-	}, {
+	},
+	{
 		.compatible = "auo,g101evn010",
 		.data = &auo_g101evn010,
-	}, {
+	},
+	{
 		.compatible = "auo,g104sn02",
 		.data = &auo_g104sn02,
-	}, {
+	},
+	{
 		.compatible = "auo,g121ean01",
 		.data = &auo_g121ean01,
-	}, {
+	},
+	{
 		.compatible = "auo,g133han01",
 		.data = &auo_g133han01,
-	}, {
+	},
+	{
 		.compatible = "auo,g156xtn01",
 		.data = &auo_g156xtn01,
-	}, {
+	},
+	{
 		.compatible = "auo,g185han01",
 		.data = &auo_g185han01,
-	}, {
+	},
+	{
 		.compatible = "auo,g190ean01",
 		.data = &auo_g190ean01,
-	}, {
+	},
+	{
 		.compatible = "auo,p320hvn03",
 		.data = &auo_p320hvn03,
-	}, {
+	},
+	{
 		.compatible = "auo,t215hvn01",
 		.data = &auo_t215hvn01,
-	}, {
+	},
+	{
 		.compatible = "avic,tm070ddh03",
 		.data = &avic_tm070ddh03,
-	}, {
+	},
+	{
 		.compatible = "bananapi,s070wv20-ct16",
 		.data = &bananapi_s070wv20_ct16,
-	}, {
-		.compatible = "boe,hv070wsa-100",
-		.data = &boe_hv070wsa
-	}, {
+	},
+	{ .compatible = "boe,hv070wsa-100", .data = &boe_hv070wsa },
+	{
 		.compatible = "cdtech,s043wq26h-ct7",
 		.data = &cdtech_s043wq26h_ct7,
-	}, {
+	},
+	{
 		.compatible = "cdtech,s070pws19hp-fc21",
 		.data = &cdtech_s070pws19hp_fc21,
-	}, {
+	},
+	{
 		.compatible = "cdtech,s070swv29hg-dc44",
 		.data = &cdtech_s070swv29hg_dc44,
-	}, {
+	},
+	{
 		.compatible = "cdtech,s070wv95-ct16",
 		.data = &cdtech_s070wv95_ct16,
-	}, {
+	},
+	{
 		.compatible = "chefree,ch101olhlwh-002",
 		.data = &chefree_ch101olhlwh_002,
-	}, {
+	},
+	{
 		.compatible = "chunghwa,claa070wp03xg",
 		.data = &chunghwa_claa070wp03xg,
-	}, {
-		.compatible = "chunghwa,claa101wa01a",
-		.data = &chunghwa_claa101wa01a
-	}, {
-		.compatible = "chunghwa,claa101wb01",
-		.data = &chunghwa_claa101wb01
-	}, {
+	},
+	{ .compatible = "chunghwa,claa101wa01a",
+	  .data = &chunghwa_claa101wa01a },
+	{ .compatible = "chunghwa,claa101wb01", .data = &chunghwa_claa101wb01 },
+	{
 		.compatible = "dataimage,fg040346dsswbg04",
 		.data = &dataimage_fg040346dsswbg04,
-	}, {
+	},
+	{
 		.compatible = "dataimage,fg1001l0dsswmg01",
 		.data = &dataimage_fg1001l0dsswmg01,
-	}, {
+	},
+	{
 		.compatible = "dataimage,scf0700c48ggu18",
 		.data = &dataimage_scf0700c48ggu18,
-	}, {
+	},
+	{
 		.compatible = "dlc,dlc0700yzg-1",
 		.data = &dlc_dlc0700yzg_1,
-	}, {
+	},
+	{
 		.compatible = "dlc,dlc1010gig",
 		.data = &dlc_dlc1010gig,
-	}, {
+	},
+	{
 		.compatible = "edt,et035012dm6",
 		.data = &edt_et035012dm6,
-	}, {
+	},
+	{
 		.compatible = "edt,etm0350g0dh6",
 		.data = &edt_etm0350g0dh6,
-	}, {
+	},
+	{
 		.compatible = "edt,etm043080dh6gp",
 		.data = &edt_etm043080dh6gp,
-	}, {
+	},
+	{
 		.compatible = "edt,etm0430g0dh6",
 		.data = &edt_etm0430g0dh6,
-	}, {
+	},
+	{
 		.compatible = "edt,et057090dhu",
 		.data = &edt_et057090dhu,
-	}, {
+	},
+	{
 		.compatible = "edt,et070080dh6",
 		.data = &edt_etm0700g0dh6,
-	}, {
+	},
+	{
 		.compatible = "edt,etm0700g0dh6",
 		.data = &edt_etm0700g0dh6,
-	}, {
+	},
+	{
 		.compatible = "edt,etm0700g0bdh6",
 		.data = &edt_etm0700g0bdh6,
-	}, {
+	},
+	{
 		.compatible = "edt,etm0700g0edh6",
 		.data = &edt_etm0700g0bdh6,
-	}, {
+	},
+	{
 		.compatible = "edt,etml0700y5dha",
 		.data = &edt_etml0700y5dha,
-	}, {
+	},
+	{
 		.compatible = "edt,etmv570g2dhu",
 		.data = &edt_etmv570g2dhu,
-	}, {
+	},
+	{
 		.compatible = "eink,vb3300-kca",
 		.data = &eink_vb3300_kca,
-	}, {
+	},
+	{
 		.compatible = "evervision,vgg804821",
 		.data = &evervision_vgg804821,
-	}, {
+	},
+	{
 		.compatible = "foxlink,fl500wvr00-a0t",
 		.data = &foxlink_fl500wvr00_a0t,
-	}, {
+	},
+	{
 		.compatible = "frida,frd350h54004",
 		.data = &frida_frd350h54004,
-	}, {
+	},
+	{
 		.compatible = "friendlyarm,hd702e",
 		.data = &friendlyarm_hd702e,
-	}, {
-		.compatible = "giantplus,gpg482739qs5",
-		.data = &giantplus_gpg482739qs5
-	}, {
+	},
+	{ .compatible = "giantplus,gpg482739qs5",
+	  .data = &giantplus_gpg482739qs5 },
+	{
 		.compatible = "giantplus,gpm940b0",
 		.data = &giantplus_gpm940b0,
-	}, {
+	},
+	{
 		.compatible = "hannstar,hsd070pww1",
 		.data = &hannstar_hsd070pww1,
-	}, {
+	},
+	{
 		.compatible = "hannstar,hsd100pxn1",
 		.data = &hannstar_hsd100pxn1,
-	}, {
+	},
+	{
 		.compatible = "hannstar,hsd101pww2",
 		.data = &hannstar_hsd101pww2,
-	}, {
-		.compatible = "hit,tx23d38vm0caa",
-		.data = &hitachi_tx23d38vm0caa
-	}, {
+	},
+	{ .compatible = "hit,tx23d38vm0caa", .data = &hitachi_tx23d38vm0caa },
+	{
 		.compatible = "innolux,at043tn24",
 		.data = &innolux_at043tn24,
-	}, {
+	},
+	{
 		.compatible = "innolux,at070tn92",
 		.data = &innolux_at070tn92,
-	}, {
+	},
+	{
 		.compatible = "innolux,g070y2-l01",
 		.data = &innolux_g070y2_l01,
-	}, {
+	},
+	{
 		.compatible = "innolux,g070y2-t02",
 		.data = &innolux_g070y2_t02,
-	}, {
-		.compatible = "innolux,g101ice-l01",
-		.data = &innolux_g101ice_l01
-	}, {
-		.compatible = "innolux,g121i1-l01",
-		.data = &innolux_g121i1_l01
-	}, {
+	},
+	{ .compatible = "innolux,g101ice-l01", .data = &innolux_g101ice_l01 },
+	{ .compatible = "innolux,g121i1-l01", .data = &innolux_g121i1_l01 },
+	{
 		.compatible = "innolux,g121x1-l03",
 		.data = &innolux_g121x1_l03,
-	}, {
+	},
+	{
 		.compatible = "innolux,n156bge-l21",
 		.data = &innolux_n156bge_l21,
-	}, {
+	},
+	{
 		.compatible = "innolux,zj070na-01p",
 		.data = &innolux_zj070na_01p,
-	}, {
+	},
+	{
 		.compatible = "koe,tx14d24vm1bpa",
 		.data = &koe_tx14d24vm1bpa,
-	}, {
+	},
+	{
 		.compatible = "koe,tx26d202vm0bwa",
 		.data = &koe_tx26d202vm0bwa,
-	}, {
+	},
+	{
 		.compatible = "koe,tx31d200vm0baa",
 		.data = &koe_tx31d200vm0baa,
-	}, {
+	},
+	{
 		.compatible = "kyo,tcg121xglp",
 		.data = &kyo_tcg121xglp,
-	}, {
+	},
+	{
 		.compatible = "lemaker,bl035-rgb-002",
 		.data = &lemaker_bl035_rgb_002,
-	}, {
+	},
+	{
 		.compatible = "lg,lb070wv8",
 		.data = &lg_lb070wv8,
-	}, {
+	},
+	{
 		.compatible = "lincolntech,lcd185-101ct",
 		.data = &lincolntech_lcd185_101ct,
-	}, {
+	},
+	{
 		.compatible = "logicpd,type28",
 		.data = &logicpd_type_28,
-	}, {
+	},
+	{
 		.compatible = "logictechno,lt161010-2nhc",
 		.data = &logictechno_lt161010_2nh,
-	}, {
+	},
+	{
 		.compatible = "logictechno,lt161010-2nhr",
 		.data = &logictechno_lt161010_2nh,
-	}, {
+	},
+	{
 		.compatible = "logictechno,lt170410-2whc",
 		.data = &logictechno_lt170410_2whc,
-	}, {
+	},
+	{
 		.compatible = "logictechno,lttd800480070-l2rt",
 		.data = &logictechno_lttd800480070_l2rt,
-	}, {
+	},
+	{
 		.compatible = "logictechno,lttd800480070-l6wh-rt",
 		.data = &logictechno_lttd800480070_l6wh_rt,
-	}, {
+	},
+	{
 		.compatible = "microtips,mf-101hiebcaf0",
 		.data = &microtips_mf_101hiebcaf0,
-	}, {
+	},
+	{
 		.compatible = "microtips,mf-103hieb0ga0",
 		.data = &microtips_mf_103hieb0ga0,
-	}, {
+	},
+	{
 		.compatible = "mitsubishi,aa070mc01-ca1",
 		.data = &mitsubishi_aa070mc01,
-	}, {
+	},
+	{
 		.compatible = "multi-inno,mi0700s4t-6",
 		.data = &multi_inno_mi0700s4t_6,
-	}, {
+	},
+	{
 		.compatible = "multi-inno,mi0800ft-9",
 		.data = &multi_inno_mi0800ft_9,
-	}, {
+	},
+	{
 		.compatible = "multi-inno,mi1010ait-1cp",
 		.data = &multi_inno_mi1010ait_1cp,
-	}, {
+	},
+	{
 		.compatible = "nec,nl12880bc20-05",
 		.data = &nec_nl12880bc20_05,
-	}, {
+	},
+	{
 		.compatible = "nec,nl4827hc19-05b",
 		.data = &nec_nl4827hc19_05b,
-	}, {
+	},
+	{
 		.compatible = "netron-dy,e231732",
 		.data = &netron_dy_e231732,
-	}, {
+	},
+	{
 		.compatible = "newhaven,nhd-4.3-480272ef-atxl",
 		.data = &newhaven_nhd_43_480272ef_atxl,
-	}, {
+	},
+	{
 		.compatible = "nlt,nl192108ac18-02d",
 		.data = &nlt_nl192108ac18_02d,
-	}, {
+	},
+	{
 		.compatible = "nvd,9128",
 		.data = &nvd_9128,
-	}, {
+	},
+	{
 		.compatible = "okaya,rs800480t-7x0gp",
 		.data = &okaya_rs800480t_7x0gp,
-	}, {
+	},
+	{
 		.compatible = "olimex,lcd-olinuxino-43-ts",
 		.data = &olimex_lcd_olinuxino_43ts,
-	}, {
+	},
+	{
 		.compatible = "ontat,yx700wv03",
 		.data = &ontat_yx700wv03,
-	}, {
+	},
+	{
 		.compatible = "ortustech,com37h3m05dtc",
 		.data = &ortustech_com37h3m,
-	}, {
+	},
+	{
 		.compatible = "ortustech,com37h3m99dtc",
 		.data = &ortustech_com37h3m,
-	}, {
+	},
+	{
 		.compatible = "ortustech,com43h4m85ulc",
 		.data = &ortustech_com43h4m85ulc,
-	}, {
+	},
+	{
 		.compatible = "osddisplays,osd070t1718-19ts",
 		.data = &osddisplays_osd070t1718_19ts,
-	}, {
+	},
+	{
 		.compatible = "pda,91-00156-a0",
 		.data = &pda_91_00156_a0,
-	}, {
+	},
+	{
 		.compatible = "powertip,ph800480t013-idf02",
 		.data = &powertip_ph800480t013_idf02,
-	}, {
+	},
+	{
 		.compatible = "qiaodian,qd43003c0-40",
 		.data = &qd43003c0_40,
-	}, {
+	},
+	{
 		.compatible = "qishenglong,gopher2b-lcd",
 		.data = &qishenglong_gopher2b_lcd,
-	}, {
+	},
+	{
 		.compatible = "raspberrypi,7inch-dsi",
 		.data = &raspberrypi_7inch,
-	}, {
+	},
+	{
 		.compatible = "rocktech,rk070er9427",
 		.data = &rocktech_rk070er9427,
-	}, {
+	},
+	{
 		.compatible = "rocktech,rk101ii01d-ct",
 		.data = &rocktech_rk101ii01d_ct,
-	}, {
+	},
+	{
 		.compatible = "samsung,ltl101al01",
 		.data = &samsung_ltl101al01,
-	}, {
+	},
+	{
 		.compatible = "samsung,ltn101nt05",
 		.data = &samsung_ltn101nt05,
-	}, {
+	},
+	{
 		.compatible = "satoz,sat050at40h12r2",
 		.data = &satoz_sat050at40h12r2,
-	}, {
+	},
+	{
 		.compatible = "sgd,gktw70sdae4se",
 		.data = &sgd_gktw70sdae4se,
-	}, {
+	},
+	{
 		.compatible = "avnet,ama101a07",
 		.data = &avnet_ama101a07,
-	}, {
+	},
+	{
+		.compatible = "lcdis,lds050wvla07201c040a",
+		.data = &lcdis_lds050wvla07201c040a,
+	},
+	{
 		.compatible = "sharp,lq035q7db03",
 		.data = &sharp_lq035q7db03,
-	}, {
+	},
+	{
 		.compatible = "sharp,lq070y3dg3b",
 		.data = &sharp_lq070y3dg3b,
-	}, {
+	},
+	{
 		.compatible = "sharp,lq101k1ly04",
 		.data = &sharp_lq101k1ly04,
-	}, {
+	},
+	{
 		.compatible = "sharp,ls020b1dd01d",
 		.data = &sharp_ls020b1dd01d,
-	}, {
+	},
+	{
 		.compatible = "shelly,sca07010-bfn-lnn",
 		.data = &shelly_sca07010_bfn_lnn,
-	}, {
+	},
+	{
 		.compatible = "starry,kr070pe2t",
 		.data = &starry_kr070pe2t,
-	}, {
+	},
+	{
 		.compatible = "startek,kd070wvfpa",
 		.data = &startek_kd070wvfpa,
-	}, {
+	},
+	{
 		.compatible = "team-source-display,tst043015cmhx",
 		.data = &tsd_tst043015cmhx,
-	}, {
+	},
+	{
 		.compatible = "tfc,s9700rtwv43tr-01b",
 		.data = &tfc_s9700rtwv43tr_01b,
-	}, {
+	},
+	{
 		.compatible = "tianma,tm070jdhg30",
 		.data = &tianma_tm070jdhg30,
-	}, {
+	},
+	{
 		.compatible = "tianma,tm070jvhg33",
 		.data = &tianma_tm070jvhg33,
-	}, {
+	},
+	{
 		.compatible = "tianma,tm070rvhg71",
 		.data = &tianma_tm070rvhg71,
-	}, {
+	},
+	{
 		.compatible = "ti,nspire-cx-lcd-panel",
 		.data = &ti_nspire_cx_lcd_panel,
-	}, {
+	},
+	{
 		.compatible = "ti,nspire-classic-lcd-panel",
 		.data = &ti_nspire_classic_lcd_panel,
-	}, {
+	},
+	{
 		.compatible = "toshiba,lt089ac29000",
 		.data = &toshiba_lt089ac29000,
-	}, {
+	},
+	{
 		.compatible = "tpk,f07a-0102",
 		.data = &tpk_f07a_0102,
-	}, {
+	},
+	{
 		.compatible = "tpk,f10a-0102",
 		.data = &tpk_f10a_0102,
-	}, {
+	},
+	{
 		.compatible = "urt,umsh-8596md-t",
 		.data = &urt_umsh_8596md_parallel,
-	}, {
+	},
+	{
 		.compatible = "urt,umsh-8596md-1t",
 		.data = &urt_umsh_8596md_parallel,
-	}, {
+	},
+	{
 		.compatible = "urt,umsh-8596md-7t",
 		.data = &urt_umsh_8596md_parallel,
-	}, {
+	},
+	{
 		.compatible = "urt,umsh-8596md-11t",
 		.data = &urt_umsh_8596md_lvds,
-	}, {
+	},
+	{
 		.compatible = "urt,umsh-8596md-19t",
 		.data = &urt_umsh_8596md_lvds,
-	}, {
+	},
+	{
 		.compatible = "urt,umsh-8596md-20t",
 		.data = &urt_umsh_8596md_parallel,
-	}, {
+	},
+	{
 		.compatible = "vivax,tpc9150-panel",
 		.data = &vivax_tpc9150_panel,
-	}, {
+	},
+	{
 		.compatible = "vxt,vl050-8048nt-c01",
 		.data = &vl050_8048nt_c01,
-	}, {
+	},
+	{
 		.compatible = "winstar,wf35ltiacd",
 		.data = &winstar_wf35ltiacd,
-	}, {
+	},
+	{
 		.compatible = "yes-optoelectronics,ytc700tlag-05-201c",
 		.data = &yes_optoelectronics_ytc700tlag_05_201c,
-	}, {
+	},
+	{
 		/* Must be the last entry */
 		.compatible = "panel-dpi",
 		.data = &panel_dpi,
-	}, {
+	},
+	{
 		/* sentinel */
 	}
 };
@@ -4556,8 +4723,8 @@ static void panel_simple_platform_shutdown(struct platform_device *pdev)
 
 static const struct dev_pm_ops panel_simple_pm_ops = {
 	SET_RUNTIME_PM_OPS(panel_simple_suspend, panel_simple_resume, NULL)
-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-				pm_runtime_force_resume)
+		SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+					pm_runtime_force_resume)
 };
 
 static struct platform_driver panel_simple_platform_driver = {
@@ -4782,28 +4949,16 @@ static const struct panel_desc_dsi osd101t2045_53ts = {
 };
 
 static const struct of_device_id dsi_of_match[] = {
+	{ .compatible = "auo,b080uan01", .data = &auo_b080uan01 },
+	{ .compatible = "boe,tv080wum-nl0", .data = &boe_tv080wum_nl0 },
+	{ .compatible = "lg,ld070wx3-sl01", .data = &lg_ld070wx3_sl01 },
+	{ .compatible = "lg,lh500wx1-sd03", .data = &lg_lh500wx1_sd03 },
+	{ .compatible = "panasonic,vvx10f004b00",
+	  .data = &panasonic_vvx10f004b00 },
+	{ .compatible = "lg,acx467akm-7", .data = &lg_acx467akm_7 },
+	{ .compatible = "osddisplays,osd101t2045-53ts",
+	  .data = &osd101t2045_53ts },
 	{
-		.compatible = "auo,b080uan01",
-		.data = &auo_b080uan01
-	}, {
-		.compatible = "boe,tv080wum-nl0",
-		.data = &boe_tv080wum_nl0
-	}, {
-		.compatible = "lg,ld070wx3-sl01",
-		.data = &lg_ld070wx3_sl01
-	}, {
-		.compatible = "lg,lh500wx1-sd03",
-		.data = &lg_lh500wx1_sd03
-	}, {
-		.compatible = "panasonic,vvx10f004b00",
-		.data = &panasonic_vvx10f004b00
-	}, {
-		.compatible = "lg,acx467akm-7",
-		.data = &lg_acx467akm_7
-	}, {
-		.compatible = "osddisplays,osd101t2045-53ts",
-		.data = &osd101t2045_53ts
-	}, {
 		/* sentinel */
 	}
 };
