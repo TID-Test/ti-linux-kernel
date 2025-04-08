@@ -12,6 +12,9 @@
 
 #include "k3-am625-var-som.dtsi"
 
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/soc/ti,sci_pm_domain.h>
+
 / {
 	model = "Variscite VAR-SOM-AM62 on SLICE SOFINIOR";
 
@@ -324,25 +327,25 @@
 	capture0@23100000 {
 		compatible = "ti,am62-ecap-capture";
 		reg = <0x00 0x23100000 0x00 0x100>;
-		interrupts = <GIC_SPI 116 IRQ_TYPE_EDGE_RISING>;
+		interrupts = <GIC_SPI 113 IRQ_TYPE_EDGE_RISING>;
 		power-domains = <&k3_pds 51 TI_SCI_PD_EXCLUSIVE>;
 		clocks = <&k3_clks 51 0>;
 		clock-names = "fck";
 		status = "okay";
-		pinctrl-names = "default";
-		pinctrl-0 = <&pwmin0_pins_default>;
+		// pinctrl-names = "default";
+		// pinctrl-0 = <&pwmin0_pins_default>;
 	};
 
 	capture2@23120000 {
 		compatible = "ti,am62-ecap-capture";
 		reg = <0x00 0x23120000 0x00 0x100>;
-		interrupts = <GIC_SPI 118 IRQ_TYPE_EDGE_RISING>;
+		interrupts = <GIC_SPI 113 IRQ_TYPE_EDGE_RISING>;
 		power-domains = <&k3_pds 53 TI_SCI_PD_EXCLUSIVE>;
 		clocks = <&k3_clks 53 0>;
 		clock-names = "fck";
 		status = "okay";
-		pinctrl-names = "default";
-		pinctrl-0 = <&pwmin2_pins_default>;
+		// pinctrl-names = "default";
+		// pinctrl-0 = <&pwmin2_pins_default>;
 	};
 
 	sound-wm8904 {
@@ -419,13 +422,13 @@
 	status = "okay";
 
 	/* DS1337 RTC module */
-	rtc@68 {
+	rtc: rtc@68 {
 		compatible = "dallas,ds1337";
 		reg = <0x68>;
 		status = "okay";
 	};
 
-	gt911@14 {
+	capacitive_touch: gt911@14 {
 		compatible = "goodix,gt911";
 		reg = <0x14>;
 		interrupt-parent = <&main_gpio1>;
@@ -445,7 +448,7 @@
 // I2C#B
 &main_i2c2 {
 	// ti,ads7828
-	ads7828@48 {
+	adc: ads7828@48 {
 		compatible = "ti,ads7828";
 		reg = <0x48>;
 
@@ -455,7 +458,7 @@
 		status = "okay";
 	};
 
-	wm8904 {
+	wm8904: audio-codec@1a {
 		status = "disabled";
 	};
 
@@ -501,7 +504,7 @@
 	// TS and MCLR for MGC3030
 	mgc3030_pins_default: mgc3030-default-pins {
 		pinctrl-single,pins = <
-		AM62X_IOPAD(0x01d8, PIN_INPUT, 7) /* (C15) MCAN0_TX.GPIO1_24 */ /*MGC3030 MCLR*/
+		AM62X_IOPAD(0x01d8, PIN_OUTPUT, 7) /* (C15) MCAN0_TX.GPIO1_24 */ /*MGC3030 MCLR*/
 		AM62X_IOPAD(0x01dc, PIN_INPUT, 7) /* (E15) MCAN0_RX.GPIO1_25 */ /*MGC3030 TS*/
 		>;
 	};
