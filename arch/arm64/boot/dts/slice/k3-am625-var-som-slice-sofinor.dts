@@ -13,7 +13,7 @@
 #include "k3-am625-var-som.dtsi"
 
 / {
-	model = "Variscite VAR-SOM-AM62 on SLICE LUXOMED";
+	model = "Variscite VAR-SOM-AM62 on SLICE SOFINIOR";
 
 	aliases {
 		ethernet0 = &cpsw_port1;
@@ -27,7 +27,6 @@
 		serial6 = &main_uart6;
 		spi5 = &main_spi2;
 		usb0 = &usb0;
-		usb1 = &usb1;
 	};
 
 	backlight: backlight {
@@ -79,26 +78,98 @@
 			debounce-interval = <10>;  // Optional debounce (in ms)
 		};
 
-		pedale1 {
-			label = "Pedale-1";
-			linux,code = <103>;//cursor up
+		in1 {
+			label = "IN-1";
+			linux,code = <2>;//#1
+			gpios = <&pca9555In 1 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+		};
+
+		in2 {
+			label = "IN-2";
+			linux,code = <3>;
+			gpios = <&pca9555In 2 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+		};
+
+		in3 {
+			label = "IN-3";
+			linux,code = <4>;
+			gpios = <&pca9555In 3 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+		};
+
+		in4 {
+			label = "IN-4";
+			linux,code = <5>;
+			gpios = <&pca9555In 4 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+		};
+
+		in5 {
+			label = "IN-5";
+			linux,code = <6>;
+			gpios = <&pca9555In 5 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+		};
+
+		in6 {
+			label = "IN-6";
+			linux,code = <7>;
+			gpios = <&pca9555In 6 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+		};
+
+		in7 {
+			label = "IN-7";
+			linux,code = <8>;
 			gpios = <&pca9555In 7 GPIO_ACTIVE_LOW>;
 			wakeup-source;
 			debounce-interval = <10>;  // Optional debounce (in ms)
 		};
 
-		pedale2 {
-			label = "Pedale-2";
-			linux,code = <103>;//cursor up
-			gpios = <&pca9555In 13 GPIO_ACTIVE_LOW>;
+		in8 {
+			label = "IN-8";
+			linux,code = <9>;
+			gpios = <&pca9555In 11 GPIO_ACTIVE_LOW>;
 			wakeup-source;
 			debounce-interval = <10>;  // Optional debounce (in ms)
 		};
 
-		pedale3 {
-			label = "Pedale-3";
-			linux,code = <103>;//cursor up
-			gpios = <&pca9555In 12 GPIO_ACTIVE_LOW>;
+		in9 {
+			label = "IN-9";
+			linux,code = <10>;
+			gpios = <&pca9555In 10 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+		};
+
+		in10 {
+			label = "IN-10";
+			linux,code = <11>; //#0
+			gpios = <&pca9555In 9 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+		};
+
+		in11 {
+			label = "IN-11";
+			linux,code = <12>; //#-
+			gpios = <&pca9555In 8 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+		};
+
+		in12 {
+			label = "IN-12";
+			linux,code = <13>; //#=
+			gpios = <&pca9555In 15 GPIO_ACTIVE_LOW>;
 			wakeup-source;
 			debounce-interval = <10>;  // Optional debounce (in ms)
 		};
@@ -110,27 +181,116 @@
 
 		ctrl_out_1 {
 			label = "ctrl-out-1";                 // Label for the LED
-			gpios = <&pca9555Out 0 GPIO_ACTIVE_LOW>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 0 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 			default-state = "off";                   // Initial state
 		};
 
 		ctrl_out_2 {
 			label = "ctrl-out-2";                 // Label for the LED
-			gpios = <&pca9555Out 1 GPIO_ACTIVE_LOW>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 1 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 			default-state = "off";                   // Initial state
 		};
-	};
 
-	epwm_buzzer {
-		compatible = "pwm-leds";
-		pinctrl-names = "default";
-		pinctrl-0 = <&buzzer_pwm_c>;
+		ctrl_out_3 {
+			label = "ctrl-out-3";                 // Label for the LED
+			gpios = <&pca9555Out 2 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_4 {
+			label = "ctrl-out-4";                 // Label for the LED
+			gpios = <&pca9555Out 3 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_5 {
+			label = "ctrl-out-5";                 // Label for the LED
+			gpios = <&pca9555Out 4 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_6 {
+			label = "ctrl-out-6";                 // Label for the LED
+			gpios = <&pca9555Out 5 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_7 {
+			label = "ctrl-out-7";                 // Label for the LED
+			gpios = <&pca9555Out 6 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_8 {
+			label = "ctrl-out-8";                 // Label for the LED
+			gpios = <&pca9555Out 7 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_9 {
+			label = "ctrl-out-9";                 // Label for the LED
+			gpios = <&pca9555Out 8 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_10 {
+			label = "ctrl-out-10";                 // Label for the LED
+			gpios = <&pca9555Out 9 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_11 {
+			label = "ctrl-out-11";                 // Label for the LED
+			gpios = <&pca9555Out 10 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_12 {
+			label = "ctrl-out-12";                 // Label for the LED
+			gpios = <&pca9555Out 11 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_13 {
+			label = "ctrl-out-13";                 // Label for the LED
+			gpios = <&pca9555Out 12 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_14 {
+			label = "ctrl-out-14";                 // Label for the LED
+			gpios = <&pca9555Out 13 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		dir_motor_1 {
+			label = "dir-motor-1";                 // Label for the LED
+			gpios = <&pca9555Out 14 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		dir_motor_2 {
+			label = "dir-motor-2";                 // Label for the LED
+			gpios = <&pca9555Out 15 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
 
 		buzzer {
-			label = "pwm_buzzer";
-			pwms = <&epwm1 1 1000000 PWM_POLARITY_NORMAL>; //0 channel B
-			max-brightness = <255>;   /* Maximum brightness */
-			default-brightness = <0>; /* Default brightness */
+			label = "buzzer";                 // Label for the LED
+			gpios = <&pca9555In 12 GPIO_ACTIVE_HIGH>;
+			default-state = "off";                   // Initial state
+		};
+
+		onoffmotor1 {
+			label = "on-off-motor-1";                 // Label for the LED
+			gpios = <&pca9555In 13 GPIO_ACTIVE_HIGH>;
+			default-state = "off";                   // Initial state
+		};
+
+		onoffmotor2 {
+			label = "on-off-motor-2";                 // Label for the LED
+			gpios = <&pca9555In 14 GPIO_ACTIVE_HIGH>;
+			default-state = "off";                   // Initial state
 		};
 	};
 
@@ -161,16 +321,16 @@
 		status = "okay";
 	};
 
-	capture1@23110000 {
+	capture0@23100000 {
 		compatible = "ti,am62-ecap-capture";
-		reg = <0x00 0x23110000 0x00 0x100>;
-		interrupts = <GIC_SPI 117 IRQ_TYPE_EDGE_RISING>;
-		power-domains = <&k3_pds 52 TI_SCI_PD_EXCLUSIVE>;
-		clocks = <&k3_clks 52 0>;
+		reg = <0x00 0x23100000 0x00 0x100>;
+		interrupts = <GIC_SPI 116 IRQ_TYPE_EDGE_RISING>;
+		power-domains = <&k3_pds 51 TI_SCI_PD_EXCLUSIVE>;
+		clocks = <&k3_clks 51 0>;
 		clock-names = "fck";
 		status = "okay";
 		pinctrl-names = "default";
-		pinctrl-0 = <&ecap1_pins_default>;
+		pinctrl-0 = <&pwmin0_pins_default>;
 	};
 
 	capture2@23120000 {
@@ -182,7 +342,7 @@
 		clock-names = "fck";
 		status = "okay";
 		pinctrl-names = "default";
-		pinctrl-0 = <&ecap2_pins_default>;
+		pinctrl-0 = <&pwmin2_pins_default>;
 	};
 
 	sound-wm8904 {
@@ -321,35 +481,57 @@
 		wakeup-source;
 		status = "okay";
 	};
+
+	mgc3030@42 {
+		compatible = "slice,mgc3030";
+
+		reg = <0x42>;
+
+		status = "okay";
+
+		ts-gpio = <&main_gpio1 25 0>; //GPIO_ACTIVE_HIGH is 0
+		mclr-gpio = <&main_gpio1 24 0>;
+	};
 };
 
 &main_pmx0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&button_pins_default &treatment_led_pins_default &touchrst_pins_default &intrst_pins_default>;
+	pinctrl-0 = <&touchrst_pins_default &touch_irq_pins_default &mgc3030_pins_default>;
 
-	//to disable them
+	// TS and MCLR for MGC3030
+	mgc3030_pins_default: mgc3030-default-pins {
+		pinctrl-single,pins = <
+		AM62X_IOPAD(0x01d8, PIN_INPUT, 7) /* (C15) MCAN0_TX.GPIO1_24 */ /*MGC3030 MCLR*/
+		AM62X_IOPAD(0x01dc, PIN_INPUT, 7) /* (E15) MCAN0_RX.GPIO1_25 */ /*MGC3030 TS*/
+		>;
+	};
+
+	//to disable SPI0 pins in dtsi
 	main_spi0_pins_default: main_spi0-pins-default {
 		pinctrl-single,pins = <>;
 	};
 
+	//touch reset pin
 	touchrst_pins_default: touchrst-default-pins {
 		pinctrl-single,pins = <AM62X_IOPAD(0x01bc, PIN_OUTPUT, 7) /* (A14) SPI0_CLK.GPIO1_17 */>;
 	};
 
+	//touch interrupt pin
+	touch_irq_pins_default: touch-irq-default-pins {
+		pinctrl-single,pins = <AM62X_IOPAD(0x01b8, PIN_INPUT, 7) /* (C13) SPI0_CS1.GPIO1_16 */>;
+	};
+
+	//Interrupt for Input GPIO Expander
 	pca9555_irq_default: pca9555_irq_default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x01b4, PIN_INPUT, 7) /* (A13) SPI0_CS0.GPIO1_15 */>;
 	};
 
-	intrst_pins_default: intrst-default-pins {
-		pinctrl-single,pins = <AM62X_IOPAD(0x01b8, PIN_INPUT, 7) /* (C13) SPI0_CS1.GPIO1_16 */>;
+	pwmin0_pins_default: pwmin0-default-pins {
+		pinctrl-single,pins = <AM62X_IOPAD(0x01f0, PIN_INPUT, 8) /* (A18) EXT_REFCLK1.ECAP0_IN_APWM_OUT */>;
 	};
 
-	ecap1_pins_default: ecap1-default-pins {
-		pinctrl-single,pins = <AM62X_IOPAD(0x0194, PIN_INPUT, 5) /* (B19) MCASP0_AXR3.ECAP1_IN_APWM_OUT */>;
-	};
-
-	ecap2_pins_default: ecap2-default-pins {
-		pinctrl-single,pins = <AM62X_IOPAD(0x0198, PIN_INPUT, 5) /* (A19) MCASP0_AXR2.ECAP2_IN_APWM_OUT */>;
+	pwmin2_pins_default: pwmin2-default-pins {
+		pinctrl-single,pins = <AM62X_IOPAD(0x01e4, PIN_INPUT, 8) /* (A16) I2C0_SDA.ECAP2_IN_APWM_OUT */>;
 	};
 
 	extcon_pins_default: extcon-pins-default {
@@ -360,24 +542,11 @@
 		pinctrl-single,pins = <AM62X_IOPAD(0x019c, PIN_OUTPUT, 6) /* (B18) MCASP0_AXR1.EHRPWM1_A */>;
 	};
 
-	buzzer_pwm_c: main-epwm1-buzzer_pwm_c-default {
-		pinctrl-single,pins = <AM62X_IOPAD(0x01a0, PIN_INPUT, 6) /* (D18) MCASP0_AXR0.EHRPWM1_B */>;
-	};
-
 	main_i2c0_pins_default: main-i2c0-pins-default {
 		pinctrl-single,pins = <
 		AM62X_IOPAD(0x1e0, PIN_INPUT_PULLUP, 0) /* (B16) I2C0_SCL */
 		AM62X_IOPAD(0x1e4, PIN_INPUT_PULLUP, 0) /* (A16) I2C0_SDA */
 		>;
-	};
-
-	/*Added by ES*/
-	button_pins_default: button-default-pins {
-		pinctrl-single,pins = <AM62X_IOPAD(0x0244, PIN_INPUT, 7) /* (B15) MMC1_SDWP.GPIO1_49 */>;
-	};
-	/*Added by ES*/
-	treatment_led_pins_default: treatment_led-default-pins {
-		pinctrl-single,pins = <AM62X_IOPAD(0x009c, PIN_INPUT, 7) /* (P17) GPMC0_WAIT1.GPIO0_38 */>;
 	};
 
 	main_i2c1_pins_default: main-i2c1-pins-default {
@@ -440,10 +609,6 @@
 
 	main_usb0_pins_default: main-usb0-pins-default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x0254, PIN_OUTPUT, 0) /* (C20) USB0_DRVVBUS */>;
-	};
-
-	main_usb1_pins_default: main-usb1-pins-default {
-		pinctrl-single,pins = <AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */>;
 	};
 
 	vdd_mmc1_pins_default: vdd-mmc1-pins-default {
@@ -549,10 +714,7 @@
 };
 
 &usb1 {
-	dr_mode = "host";
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_usb1_pins_default>;
-	status = "okay";
+	status = "disabled";
 };
 
 &usbss0 {
@@ -560,7 +722,7 @@
 };
 
 &usbss1 {
-	status = "okay";
+	status = "disabled";
 };
 
 &wkup_r5fss0_core0 {
