@@ -445,7 +445,7 @@
 	};
 };
 
-// I2C#B
+// I2C#B sur dev kit
 &main_i2c2 {
 	// ti,ads7828
 	adc: ads7828@48 {
