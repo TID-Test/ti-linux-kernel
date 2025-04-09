@@ -332,8 +332,8 @@
 		clocks = <&k3_clks 51 0>;
 		clock-names = "fck";
 		status = "okay";
-		// pinctrl-names = "default";
-		// pinctrl-0 = <&pwmin0_pins_default>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pwmin0_pins_default>;
 	};
 
 	capture2@23120000 {
@@ -344,8 +344,8 @@
 		clocks = <&k3_clks 53 0>;
 		clock-names = "fck";
 		status = "okay";
-		// pinctrl-names = "default";
-		// pinctrl-0 = <&pwmin2_pins_default>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pwmin2_pins_default>;
 	};
 
 	sound-wm8904 {
