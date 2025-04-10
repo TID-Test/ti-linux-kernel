@@ -293,7 +293,7 @@
 		status = "okay";
 	};
 
-	wm8904 {
+	wm8904: audio-codec@1a {
 		status = "disabled";
 	};
 };

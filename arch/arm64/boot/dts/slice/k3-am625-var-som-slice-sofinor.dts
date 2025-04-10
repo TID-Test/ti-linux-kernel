@@ -13,7 +13,7 @@
 #include "k3-am625-var-som.dtsi"
 
 #include <dt-bindings/interrupt-controller/arm-gic.h>
-#include "k3-pinctrl.h"
+#include <dt-bindings/soc/ti,sci_pm_domain.h>
 
 / {
 	model = "Variscite VAR-SOM-AM62 on SLICE SOFINIOR";
@@ -324,89 +324,34 @@
 		status = "okay";
 	};
 
-	// capture0@23100000 {
-		//     compatible = "ti,am62-ecap-capture";
-		//     reg = <0x00 0x23110000 0x00 0x100>;
-		//     interrupts = <GIC_SPI 116 IRQ_TYPE_EDGE_RISING>;
-		//     power-domains = <&k3_pds 51 TI_SCI_PD_EXCLUSIVE>;
-		//     clocks = <&k3_clks 51 0>;
-		//     clock-names = "fck";
-		//     status = "okay";
-		//     pinctrl-names = "default";
-		//     pinctrl-0 = <&pwmin0_pins_default>;
-	// };
+	//example from https: //lore.kernel.org/lkml/21a66361-5180-65e1-f075-2163bf46af08@baylibre.com/T/
+	capture0@23100000 {/* eCAP in capture mode on am62x */
+		compatible = "ti,am62-ecap-capture";
+		reg = <0x00 0x23100000 0x00 0x100>;
+		interrupts = <GIC_SPI 113 IRQ_TYPE_EDGE_RISING>;
+		power-domains = <&k3_pds 51 TI_SCI_PD_EXCLUSIVE>;
+		clocks = <&k3_clks 51 0>;
+		clock-names = "fck";
+		status = "okay";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pwmin0_pins_default>;
+	};
 
-	// capture2@23120000 {
-		//     compatible = "ti,am62-ecap-capture";
-		//     reg = <0x00 0x23120000 0x00 0x100>;
-		//     interrupts = <GIC_SPI 118 IRQ_TYPE_EDGE_RISING>;
-		//     power-domains = <&k3_pds 53 TI_SCI_PD_EXCLUSIVE>;
-		//     clocks = <&k3_clks 53 0>;
-		//     clock-names = "fck";
-		//     status = "okay";
-		//     pinctrl-names = "default";
-		//     pinctrl-0 = <&pwmin2_pins_default>;
-	// };
-
-	// ecap0 {
-		//     compatible = "ti,am62-ecap-capture", "ti,am3352-ecap";
-		//     status = "okay";
-		//     // pinctrl-names = "default";
-		//     // pinctrl-0 = <&pwmin0_pins_default>;
-	// };
-
-	// ecap2 {
-		//     compatible = "ti,am62-ecap-capture", "ti,am3352-ecap";
-		//     status = "okay";
-		//     // pinctrl-names = "default";
-		//     // pinctrl-0 = <&pwmin2_pins_default>;
-	// };
-
-	// capture0@23100000 {
-		//     compatible = "ti,am62-ecap-capture";
-		//     reg = <0x00 0x23100000 0x00 0x100>;
-		//     interrupts = <GIC_SPI 113 IRQ_TYPE_EDGE_RISING>;
-		//     power-domains = <&k3_pds 51 TI_SCI_PD_EXCLUSIVE>;
-		//     clocks = <&k3_clks 51 0>;
-		//     clock-names = "fck";
-		//     status = "okay";
-		//     pinctrl-names = "default";
-		//     pinctrl-0 = <&pwmin0_pins_default>;
-	// };
-
-	// capture2@23120000 {
-		//     compatible = "ti,am62-ecap-capture";
-		//     reg = <0x00 0x23120000 0x00 0x100>;
-		//     interrupts = <GIC_SPI 113 IRQ_TYPE_EDGE_RISING>;
-		//     power-domains = <&k3_pds 53 TI_SCI_PD_EXCLUSIVE>;
-		//     clocks = <&k3_clks 53 0>;
-		//     clock-names = "fck";
-		//     status = "okay";
-		//     pinctrl-names = "default";
-		//     pinctrl-0 = <&pwmin2_pins_default>;
-	// };
+	capture2@23120000 {/* eCAP in capture mode on am62x */
+		compatible = "ti,am62-ecap-capture";
+		reg = <0x00 0x23120000 0x00 0x100>;
+		interrupts = <GIC_SPI 115 IRQ_TYPE_EDGE_RISING>;
+		power-domains = <&k3_pds 53 TI_SCI_PD_EXCLUSIVE>;
+		clocks = <&k3_clks 53 0>;
+		clock-names = "fck";
+		status = "okay";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pwmin2_pins_default>;
+	};
 
 	sound-wm8904 {
 		status = "disabled";
 	};
-};
-
-&ecap0 {
-	compatible = "ti,am62-ecap-capture";
-	interrupt-parent = <&gic500>;
-	interrupts = <GIC_SPI 113 IRQ_TYPE_EDGE_RISING>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&pwmin0_pins_default>;
-	status = "okay";
-};
-
-&ecap2 {
-	compatible = "ti,am62-ecap-capture";
-	interrupt-parent = <&gic500>;
-	interrupts = <GIC_SPI 115 IRQ_TYPE_EDGE_RISING>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&pwmin2_pins_default>;
-	status = "okay";
 };
 
 &cpsw3g {
@@ -464,11 +409,7 @@
 };
 
 &main_i2c0 {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_i2c0_pins_default>;
-	clock-frequency = <400000>;
-
+	status = "disabled";
 };
 
 &main_i2c1 {
@@ -525,7 +466,6 @@
 		gpio-controller;
 		pinctrl-names = "default";
 		#gpio-cells = <2>;
-		wakeup-source;
 		status = "okay";
 	};
 	pca9555In: pca9555In@21 {
@@ -593,19 +533,8 @@
 		pinctrl-single,pins = <AM62X_IOPAD(0x01e4, PIN_INPUT, 8) /* (A16) I2C0_SDA.ECAP2_IN_APWM_OUT */>;
 	};
 
-	extcon_pins_default: extcon-pins-default {
-		pinctrl-single,pins = <AM62X_IOPAD(0x01a8, PIN_INPUT, 7) /* (D20) MCASP0_AFSX.GPIO1_12 */>;
-	};
-
 	main_epwm1_pins_default: main-epwm1-pins-default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x019c, PIN_OUTPUT, 6) /* (B18) MCASP0_AXR1.EHRPWM1_A */>;
-	};
-
-	main_i2c0_pins_default: main-i2c0-pins-default {
-		pinctrl-single,pins = <
-		AM62X_IOPAD(0x1e0, PIN_INPUT_PULLUP, 0) /* (B16) I2C0_SCL */
-		AM62X_IOPAD(0x1e4, PIN_INPUT_PULLUP, 0) /* (A16) I2C0_SDA */
-		>;
 	};
 
 	main_i2c1_pins_default: main-i2c1-pins-default {
