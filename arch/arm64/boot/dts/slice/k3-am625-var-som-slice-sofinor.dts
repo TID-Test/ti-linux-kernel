@@ -326,6 +326,7 @@
 	};
 };
 
+//eCAP 0
 &ecap0 {
 	compatible = "ti,am62-ecap-capture";
 	interrupt-parent = <&gic500>;
@@ -335,6 +336,7 @@
 	status = "okay";
 };
 
+//eCAP 2
 &ecap2 {
 	compatible = "ti,am62-ecap-capture";
 	interrupt-parent = <&gic500>;
