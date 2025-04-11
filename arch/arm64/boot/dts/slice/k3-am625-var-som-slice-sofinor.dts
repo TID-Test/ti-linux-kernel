@@ -12,9 +12,6 @@
 
 #include "k3-am625-var-som.dtsi"
 
-#include <dt-bindings/interrupt-controller/arm-gic.h>
-#include <dt-bindings/soc/ti,sci_pm_domain.h>
-
 / {
 	model = "Variscite VAR-SOM-AM62 on SLICE SOFINIOR";
 
@@ -324,34 +321,27 @@
 		status = "okay";
 	};
 
-	//example from https: //lore.kernel.org/lkml/21a66361-5180-65e1-f075-2163bf46af08@baylibre.com/T/
-	capture0@23100000 {/* eCAP in capture mode on am62x */
-		compatible = "ti,am62-ecap-capture";
-		reg = <0x00 0x23100000 0x00 0x100>;
-		interrupts = <GIC_SPI 113 IRQ_TYPE_EDGE_RISING>;
-		power-domains = <&k3_pds 51 TI_SCI_PD_EXCLUSIVE>;
-		clocks = <&k3_clks 51 0>;
-		clock-names = "fck";
-		status = "okay";
-		pinctrl-names = "default";
-		pinctrl-0 = <&pwmin0_pins_default>;
-	};
-
-	capture2@23120000 {/* eCAP in capture mode on am62x */
-		compatible = "ti,am62-ecap-capture";
-		reg = <0x00 0x23120000 0x00 0x100>;
-		interrupts = <GIC_SPI 115 IRQ_TYPE_EDGE_RISING>;
-		power-domains = <&k3_pds 53 TI_SCI_PD_EXCLUSIVE>;
-		clocks = <&k3_clks 53 0>;
-		clock-names = "fck";
-		status = "okay";
-		pinctrl-names = "default";
-		pinctrl-0 = <&pwmin2_pins_default>;
-	};
-
 	sound-wm8904 {
 		status = "disabled";
 	};
+};
+
+&ecap0 {
+	compatible = "ti,am62-ecap-capture";
+	interrupt-parent = <&gic500>;
+	interrupts = <GIC_SPI 113 IRQ_TYPE_EDGE_RISING>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pwmin0_pins_default>;
+	status = "okay";
+};
+
+&ecap2 {
+	compatible = "ti,am62-ecap-capture";
+	interrupt-parent = <&gic500>;
+	interrupts = <GIC_SPI 115 IRQ_TYPE_EDGE_RISING>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pwmin2_pins_default>;
+	status = "okay";
 };
 
 &cpsw3g {
