@@ -277,11 +277,11 @@
 			default-state = "off";                   // Initial state
 		};
 
-		buzzer {
-			label = "buzzer";                 // Label for the LED
-			gpios = <&pca9555In 12 GPIO_ACTIVE_HIGH>;
-			default-state = "off";                   // Initial state
-		};
+		// buzzer {
+		// 	label = "buzzer";                 // Label for the LED
+		// 	gpios = <&pca9555In 12 GPIO_ACTIVE_HIGH>;
+		// 	default-state = "off";                   // Initial state
+		// };
 
 		onoffmotor1 {
 			label = "on-off-motor-1";                 // Label for the LED
@@ -473,6 +473,13 @@
 		#gpio-cells = <2>;
 		wakeup-source;
 		status = "okay";
+
+		buzzer {
+			gpio-hog;
+			gpios = <12 GPIO_ACTIVE_HIGH>;
+			output-low;
+			line-name = "buzzer";
+		};
 	};
 
 	mgc3030@42 {
