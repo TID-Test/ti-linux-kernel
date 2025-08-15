@@ -177,124 +177,124 @@
 		// };
 	};
 
-	gpio-leds {
-		compatible = "gpio-leds";
-		status = "okay";
+	// gpio-leds {
+	// 	compatible = "gpio-leds";
+	// 	status = "okay";
 
-		ctrl_out_1 {
-			label = "ctrl-out-1";                 // Label for the LED
-			gpios = <&pca9555Out 0 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_2 {
-			label = "ctrl-out-2";                 // Label for the LED
-			gpios = <&pca9555Out 1 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_3 {
-			label = "ctrl-out-3";                 // Label for the LED
-			gpios = <&pca9555Out 2 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_4 {
-			label = "ctrl-out-4";                 // Label for the LED
-			gpios = <&pca9555Out 3 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_5 {
-			label = "ctrl-out-5";                 // Label for the LED
-			gpios = <&pca9555Out 4 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_6 {
-			label = "ctrl-out-6";                 // Label for the LED
-			gpios = <&pca9555Out 5 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_7 {
-			label = "ctrl-out-7";                 // Label for the LED
-			gpios = <&pca9555Out 6 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_8 {
-			label = "ctrl-out-8";                 // Label for the LED
-			gpios = <&pca9555Out 7 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_9 {
-			label = "ctrl-out-9";                 // Label for the LED
-			gpios = <&pca9555Out 8 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_10 {
-			label = "ctrl-out-10";                 // Label for the LED
-			gpios = <&pca9555Out 9 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_11 {
-			label = "ctrl-out-11";                 // Label for the LED
-			gpios = <&pca9555Out 10 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_12 {
-			label = "ctrl-out-12";                 // Label for the LED
-			gpios = <&pca9555Out 11 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_13 {
-			label = "ctrl-out-13";                 // Label for the LED
-			gpios = <&pca9555Out 12 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		ctrl_out_14 {
-			label = "ctrl-out-14";                 // Label for the LED
-			gpios = <&pca9555Out 13 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		dir_motor_1 {
-			label = "dir-motor-1";                 // Label for the LED
-			gpios = <&pca9555Out 14 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		dir_motor_2 {
-			label = "dir-motor-2";                 // Label for the LED
-			gpios = <&pca9555Out 15 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
-			default-state = "off";                   // Initial state
-		};
-
-		// buzzer {
-		// 	label = "buzzer";                 // Label for the LED
-		// 	gpios = <&pca9555In 12 GPIO_ACTIVE_HIGH>;
+		// ctrl_out_1 {
+		// 	label = "ctrl-out-1";                 // Label for the LED
+		// 	gpios = <&pca9555Out 0 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		// 	default-state = "off";                   // Initial state
 		// };
 
-		onoffmotor1 {
-			label = "on-off-motor-1";                 // Label for the LED
-			gpios = <&pca9555In 13 GPIO_ACTIVE_HIGH>;
-			default-state = "off";                   // Initial state
-		};
+		// ctrl_out_2 {
+		// 	label = "ctrl-out-2";                 // Label for the LED
+		// 	gpios = <&pca9555Out 1 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
 
-		onoffmotor2 {
-			label = "on-off-motor-2";                 // Label for the LED
-			gpios = <&pca9555In 14 GPIO_ACTIVE_HIGH>;
-			default-state = "off";                   // Initial state
-		};
-	};
+		// ctrl_out_3 {
+		// 	label = "ctrl-out-3";                 // Label for the LED
+		// 	gpios = <&pca9555Out 2 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_4 {
+		// 	label = "ctrl-out-4";                 // Label for the LED
+		// 	gpios = <&pca9555Out 3 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_5 {
+		// 	label = "ctrl-out-5";                 // Label for the LED
+		// 	gpios = <&pca9555Out 4 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_6 {
+		// 	label = "ctrl-out-6";                 // Label for the LED
+		// 	gpios = <&pca9555Out 5 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_7 {
+		// 	label = "ctrl-out-7";                 // Label for the LED
+		// 	gpios = <&pca9555Out 6 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_8 {
+		// 	label = "ctrl-out-8";                 // Label for the LED
+		// 	gpios = <&pca9555Out 7 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_9 {
+		// 	label = "ctrl-out-9";                 // Label for the LED
+		// 	gpios = <&pca9555Out 8 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_10 {
+		// 	label = "ctrl-out-10";                 // Label for the LED
+		// 	gpios = <&pca9555Out 9 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_11 {
+		// 	label = "ctrl-out-11";                 // Label for the LED
+		// 	gpios = <&pca9555Out 10 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_12 {
+		// 	label = "ctrl-out-12";                 // Label for the LED
+		// 	gpios = <&pca9555Out 11 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_13 {
+		// 	label = "ctrl-out-13";                 // Label for the LED
+		// 	gpios = <&pca9555Out 12 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// ctrl_out_14 {
+		// 	label = "ctrl-out-14";                 // Label for the LED
+		// 	gpios = <&pca9555Out 13 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// dir_motor_1 {
+		// 	label = "dir-motor-1";                 // Label for the LED
+		// 	gpios = <&pca9555Out 14 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// dir_motor_2 {
+		// 	label = "dir-motor-2";                 // Label for the LED
+		// 	gpios = <&pca9555Out 15 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// // buzzer {
+		// // 	label = "buzzer";                 // Label for the LED
+		// // 	gpios = <&pca9555In 12 GPIO_ACTIVE_HIGH>;
+		// // 	default-state = "off";                   // Initial state
+		// // };
+
+		// onoffmotor1 {
+		// 	label = "on-off-motor-1";                 // Label for the LED
+		// 	gpios = <&pca9555In 13 GPIO_ACTIVE_HIGH>;
+		// 	default-state = "off";                   // Initial state
+		// };
+
+		// onoffmotor2 {
+		// 	label = "on-off-motor-2";                 // Label for the LED
+		// 	gpios = <&pca9555In 14 GPIO_ACTIVE_HIGH>;
+		// 	default-state = "off";                   // Initial state
+		// };
+	// };
 
 	vdd_mmc1: regulator-3 {
 		compatible = "regulator-fixed";
@@ -461,6 +461,119 @@
 		pinctrl-names = "default";
 		#gpio-cells = <2>;
 		status = "okay";
+
+		ctrl_out_1 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-1";                 // Label for the LED
+			gpios = <0 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_2 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-2";                 // Label for the LED
+			gpios = <1 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_3 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-3";                 // Label for the LED
+			gpios = <2 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_4 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-4";                 // Label for the LED
+			gpios = <3 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_5 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-5";                 // Label for the LED
+			gpios = <4 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_6 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-6";                 // Label for the LED
+			gpios = <5 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_7 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-7";                 // Label for the LED
+			gpios = <6 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_8 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-8";                 // Label for the LED
+			gpios = <7 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_9 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-9";                 // Label for the LED
+			gpios = <8 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_10 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-10";                 // Label for the LED
+			gpios = <9 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_11 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-11";                 // Label for the LED
+			gpios = <10 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_12 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-12";                 // Label for the LED
+			gpios = <11 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_13 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-13";                 // Label for the LED
+			gpios = <12 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		ctrl_out_14 {
+			gpio-hog;
+			output-low;
+			line-name = "ctrl-out-14";                 // Label for the LED
+			gpios = <13 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		dir_motor_1 {
+			gpio-hog;
+			output-low;
+			line-name = "dir-motor-1";                 // Label for the LED
+			gpios = <14 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
+		dir_motor_2 {
+			gpio-hog;
+			output-low;
+			line-name = "dir-motor-2";                 // Label for the LED
+			gpios = <15 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+		};
+
 	};
 	pca9555In: pca9555In@21 {
 		compatible = "nxp,pca9555";
@@ -475,10 +588,24 @@
 		status = "okay";
 
 		buzzer {
-			// gpio-hog;
+			gpio-hog;
 			gpios = <12 GPIO_ACTIVE_HIGH>;
 			output-low;
 			line-name = "buzzer";
+		};
+
+		onoffmotor1 {
+			gpio-hog;
+			gpios = <13 GPIO_ACTIVE_HIGH>;
+			output-low;
+			line-name = "on-off-motor-1";                 // Label for the LED
+		};
+
+		onoffmotor2 {
+			gpio-hog;
+			output-low;
+			gpios = <14 GPIO_ACTIVE_HIGH>;
+			line-name = "on-off-motor-2";                 // Label for the LED
 		};
 	};
 
