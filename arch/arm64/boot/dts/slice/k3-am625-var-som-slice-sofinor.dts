@@ -475,7 +475,7 @@
 		status = "okay";
 
 		buzzer {
-			gpio-hog;
+			// gpio-hog;
 			gpios = <12 GPIO_ACTIVE_HIGH>;
 			output-low;
 			line-name = "buzzer";
