@@ -127,29 +127,29 @@
 		// };
 
 		//
-		in7 {
-			label = "IN-7";
-			linux,code = <8>;
-			gpios = <&pca9555In 7 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-			debounce-interval = <10>;  // Optional debounce (in ms)
-		};
+		// in7 {
+		// 	label = "IN-7";
+		// 	linux,code = <8>;
+		// 	gpios = <&pca9555In 7 GPIO_ACTIVE_LOW>;
+		// 	wakeup-source;
+		// 	debounce-interval = <10>;  // Optional debounce (in ms)
+		// };
 
-		in8 {
-			label = "IN-8";
-			linux,code = <9>;
-			gpios = <&pca9555In 11 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-			debounce-interval = <10>;  // Optional debounce (in ms)
-		};
+		// in8 {
+		// 	label = "IN-8";
+		// 	linux,code = <9>;
+		// 	gpios = <&pca9555In 11 GPIO_ACTIVE_LOW>;
+		// 	wakeup-source;
+		// 	debounce-interval = <10>;  // Optional debounce (in ms)
+		// };
 
-		in9 {
-			label = "IN-9";
-			linux,code = <10>;
-			gpios = <&pca9555In 10 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-			debounce-interval = <10>;  // Optional debounce (in ms)
-		};
+		// in9 {
+		// 	label = "IN-9";
+		// 	linux,code = <10>;
+		// 	gpios = <&pca9555In 10 GPIO_ACTIVE_LOW>;
+		// 	wakeup-source;
+		// 	debounce-interval = <10>;  // Optional debounce (in ms)
+		// };
 		//
 
 		// in10 {
@@ -587,14 +587,8 @@
 		wakeup-source;
 		status = "okay";
 
-		buzzer {
-			//gpio-hog;
-			gpios = <12 GPIO_ACTIVE_HIGH>;
-			output-low;
-			line-name = "buzzer";
-		};
-
 		in1 {
+			gpio-hog;
 			line-name = "IN-1";
 			gpios = <1 GPIO_ACTIVE_LOW>;
 			wakeup-source;
@@ -602,15 +596,121 @@
 			input;
 		};
 
+		in2 {
+			gpio-hog;
+			line-name = "IN-2";
+			gpios = <2 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;  // Optional debounce (in ms)
+			input;
+		};
+
+		in3 {
+			gpio-hog;
+			line-name = "IN-3";
+			gpios = <3 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
+
+		in4 {
+			gpio-hog;
+			line-name = "IN-4";
+			gpios = <4 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
+
+		in5 {
+			gpio-hog;
+			line-name = "IN-5";
+			gpios = <5 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
+
+		in6 {
+			gpio-hog;
+			line-name = "IN-6";
+			gpios = <6 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
+
+		in7 {
+			gpio-hog;
+			line-name = "IN-7";
+			gpios = <7 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
+
+		in8 {
+			gpio-hog;
+			line-name = "IN-8";
+			gpios = <11 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
+
+		in9 {
+			gpio-hog;
+			line-name = "IN-9";
+			gpios = <10 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
+
+		in10 {
+			gpio-hog;
+			line-name = "IN-10";
+			gpios = <9 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
+
+		in11 {
+			gpio-hog;
+			line-name = "IN-11";
+			gpios = <8 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
+
+		in12 {
+			gpio-hog;
+			line-name = "IN-12";
+			gpios = <15 GPIO_ACTIVE_LOW>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
+
+		buzzer {
+			gpio-hog;
+			gpios = <12 GPIO_ACTIVE_HIGH>;
+			output-low;
+			line-name = "buzzer";
+		};
+
 		onoffmotor1 {
-			//gpio-hog;
+			gpio-hog;
 			gpios = <13 GPIO_ACTIVE_HIGH>;
 			output-low;
 			line-name = "on-off-motor-1";                 // Label for the LED
 		};
 
 		onoffmotor2 {
-			//gpio-hog;
+			gpio-hog;
 			output-low;
 			gpios = <14 GPIO_ACTIVE_HIGH>;
 			line-name = "on-off-motor-2";                 // Label for the LED
