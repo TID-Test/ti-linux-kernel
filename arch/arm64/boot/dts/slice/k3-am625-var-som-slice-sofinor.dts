@@ -296,6 +296,15 @@
 		// };
 	// };
 
+	gpio-aggregator {
+		// pinctrl-names = "default";
+		// pinctrl-0 = <&gpio_pins>;
+		compatible = "gpio-aggregator";
+
+		gpios = <&pca9555In 9 GPIO_ACTIVE_HIGH>;
+		gpio-line-names = "COUVERCLE";
+	};
+
 	vdd_mmc1: regulator-3 {
 		compatible = "regulator-fixed";
 		regulator-name = "SD_power_en";
@@ -462,100 +471,102 @@
 		#gpio-cells = <2>;
 		status = "okay";
 
+		gpio-line-names = "CTRL_OUT-1", "CTRL_OUT-2", "CTRL_OUT-3", "CTRL_OUT-4", "CTRL_OUT-5", "CTRL_OUT-6", "CTRL_OUT-7", "CTRL_OUT-8", "CTRL_OUT-9", "CTRL_OUT-10", "CTRL_OUT-11", "CTRL_OUT-12", "CTRL_OUT-13", "CTRL_OUT-14", "DIR-VERIN", "DIR-MOTEUR";
+
 		ctrl_out_1 {
 			output-low;
 			line-name = "ctrl-out-1";                 // Label for the LED
-			gpios = <0 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 0 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_2 {
 			output-low;
 			line-name = "ctrl-out-2";                 // Label for the LED
-			gpios = <1 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 1 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_3 {
 			output-low;
 			line-name = "ctrl-out-3";                 // Label for the LED
-			gpios = <2 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 2 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_4 {
 			output-low;
 			line-name = "ctrl-out-4";                 // Label for the LED
-			gpios = <3 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 3 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_5 {
 			output-low;
 			line-name = "ctrl-out-5";                 // Label for the LED
-			gpios = <4 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 4 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_6 {
 			output-low;
 			line-name = "ctrl-out-6";                 // Label for the LED
-			gpios = <5 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 5 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_7 {
 			output-low;
 			line-name = "ctrl-out-7";                 // Label for the LED
-			gpios = <6 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 6 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_8 {
 			output-low;
 			line-name = "ctrl-out-8";                 // Label for the LED
-			gpios = <7 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 7 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_9 {
 			output-low;
 			line-name = "ctrl-out-9";                 // Label for the LED
-			gpios = <8 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 8 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_10 {
 			output-low;
 			line-name = "ctrl-out-10";                 // Label for the LED
-			gpios = <9 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 9 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_11 {
 			output-low;
 			line-name = "ctrl-out-11";                 // Label for the LED
-			gpios = <10 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 10 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_12 {
 			output-low;
 			line-name = "ctrl-out-12";                 // Label for the LED
-			gpios = <11 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 11 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_13 {
 			output-low;
 			line-name = "ctrl-out-13";                 // Label for the LED
-			gpios = <12 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 12 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		ctrl_out_14 {
 			output-low;
 			line-name = "ctrl-out-14";                 // Label for the LED
-			gpios = <13 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 13 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		dir_motor_1 {
 			output-low;
 			line-name = "dir-motor-1";                 // Label for the LED
-			gpios = <14 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 14 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 		dir_motor_2 {
 			output-low;
 			line-name = "dir-motor-2";                 // Label for the LED
-			gpios = <15 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			gpios = <&pca9555Out 15 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
 		};
 
 	};
@@ -571,118 +582,120 @@
 		wakeup-source;
 		status = "okay";
 
+		gpio-line-names = "RESET", "CONN_IN-1", "CONN_IN-2", "CONN_IN-3", "CONN_IN-4", "CONN_IN-5", "CONN_IN-6", "CONN_IN-7", "CONN_IN-11", "CONN_IN-10", "CONN_IN-9", "CONN_IN-8", "BUZZER", "ON_OFF-VERIN", "ON_OFF-MOTEUR", "CONN_IN-12";
+
 		in1 {
 			line-name = "CONN_IN-1";
-			gpios = <1 GPIO_ACTIVE_LOW>;
+			gpios = <&pca9555In 1 GPIO_ACTIVE_HIGH>;
 			wakeup-source;
-			debounce-interval = <100>;  // Optional debounce (in ms)
+			debounce-interval = <10>;  // Optional debounce (in ms)
 			input;
 		};
 
 		in2 {
 			line-name = "CONN_IN-2";
-			gpios = <2 GPIO_ACTIVE_LOW>;
+			gpios = <&pca9555In 2 GPIO_ACTIVE_HIGH>;
 			wakeup-source;
-			debounce-interval = <100>;  // Optional debounce (in ms)
+			debounce-interval = <10>;  // Optional debounce (in ms)
 			input;
 		};
 
 		in3 {
 			line-name = "CONN_IN-3";
-			gpios = <3 GPIO_ACTIVE_LOW>;
+			gpios = <&pca9555In 3 GPIO_ACTIVE_HIGH>;
 			wakeup-source;
-			debounce-interval = <100>;
+			debounce-interval = <10>;
 			input;
 		};
 
 		in4 {
 			line-name = "CONN_IN-4";
-			gpios = <4 GPIO_ACTIVE_LOW>;
+			gpios = <&pca9555In 4 GPIO_ACTIVE_HIGH>;
 			wakeup-source;
-			debounce-interval = <100>;
+			debounce-interval = <10>;
 			input;
 		};
 
 		in5 {
 			line-name = "CONN_IN-5";
-			gpios = <5 GPIO_ACTIVE_LOW>;
+			gpios = <&pca9555In 5 GPIO_ACTIVE_HIGH>;
 			wakeup-source;
-			debounce-interval = <100>;
+			debounce-interval = <10>;
 			input;
 		};
 
 		in6 {
 			line-name = "CONN_IN-6";
-			gpios = <6 GPIO_ACTIVE_LOW>;
+			gpios = <&pca9555In 6 GPIO_ACTIVE_HIGH>;
 			wakeup-source;
-			debounce-interval = <100>;
+			debounce-interval = <10>;
 			input;
 		};
 
 		in7 {
 			line-name = "CONN_IN-7";
-			gpios = <7 GPIO_ACTIVE_LOW>;
+			gpios = <&pca9555In 7 GPIO_ACTIVE_HIGH>;
 			wakeup-source;
-			debounce-interval = <100>;
+			debounce-interval = <10>;
 			input;
 		};
 
 		in11 {
 			line-name = "CONN_IN-11";
-			gpios = <11 GPIO_ACTIVE_LOW>;
+			gpios = <&pca9555In 8 GPIO_ACTIVE_HIGH>;
 			wakeup-source;
-			debounce-interval = <100>;
+			debounce-interval = <10>;
 			input;
 		};
 
-		in10 {
-			line-name = "CONN_IN-10";
-			gpios = <10 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-			debounce-interval = <100>;
-			input;
-		};
+		// in10 {
+		// 	line-name = "CONN_IN-10";
+		// 	gpios = <&pca9555In 9 GPIO_ACTIVE_HIGH>;
+		// 	wakeup-source;
+		// 	debounce-interval = <10>;
+		// 	input;
+		// };
 
 		in9 {
 			line-name = "CONN_IN-9";
-			gpios = <9 GPIO_ACTIVE_LOW>;
+			gpios = <&pca9555In 10 GPIO_ACTIVE_HIGH>;
 			wakeup-source;
-			debounce-interval = <100>;
+			debounce-interval = <10>;
 			input;
 		};
 
 		in8 {
 			line-name = "CONN_IN-8";
-			gpios = <8 GPIO_ACTIVE_LOW>;
+			gpios = <&pca9555In 11 GPIO_ACTIVE_HIGH>;
 			wakeup-source;
-			debounce-interval = <100>;
-			input;
-		};
-
-		in15 {
-			line-name = "CONN_IN-15";
-			gpios = <15 GPIO_ACTIVE_LOW>;
-			wakeup-source;
-			debounce-interval = <100>;
+			debounce-interval = <10>;
 			input;
 		};
 
 		buzzer {
-			gpios = <12 GPIO_ACTIVE_HIGH>;
+			gpios = <&pca9555In 12 GPIO_ACTIVE_HIGH>;
 			output-low;
 			line-name = "buzzer";
 		};
 
 		onoffmotor1 {
-			gpios = <13 GPIO_ACTIVE_HIGH>;
+			gpios = <&pca9555In 13 GPIO_ACTIVE_HIGH>;
 			output-low;
 			line-name = "on-off-motor-1";                 // Label for the LED
 		};
 
 		onoffmotor2 {
 			output-low;
-			gpios = <14 GPIO_ACTIVE_HIGH>;
+			gpios = <&pca9555In 14 GPIO_ACTIVE_HIGH>;
 			line-name = "on-off-motor-2";                 // Label for the LED
+		};
+
+		in12 {
+			line-name = "CONN_IN-12";
+			gpios = <&pca9555In 15 GPIO_ACTIVE_HIGH>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
 		};
 	};
 
