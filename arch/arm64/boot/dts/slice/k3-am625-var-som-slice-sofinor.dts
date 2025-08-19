@@ -575,7 +575,7 @@
 			line-name = "CONN_IN-1";
 			gpios = <1 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;  // Optional debounce (in ms)
+			debounce-interval = <100>;  // Optional debounce (in ms)
 			input;
 		};
 
@@ -583,7 +583,7 @@
 			line-name = "CONN_IN-2";
 			gpios = <2 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;  // Optional debounce (in ms)
+			debounce-interval = <100>;  // Optional debounce (in ms)
 			input;
 		};
 
@@ -591,7 +591,7 @@
 			line-name = "CONN_IN-3";
 			gpios = <3 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;
+			debounce-interval = <100>;
 			input;
 		};
 
@@ -599,7 +599,7 @@
 			line-name = "CONN_IN-4";
 			gpios = <4 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;
+			debounce-interval = <100>;
 			input;
 		};
 
@@ -607,7 +607,7 @@
 			line-name = "CONN_IN-5";
 			gpios = <5 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;
+			debounce-interval = <100>;
 			input;
 		};
 
@@ -615,7 +615,7 @@
 			line-name = "CONN_IN-6";
 			gpios = <6 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;
+			debounce-interval = <100>;
 			input;
 		};
 
@@ -623,7 +623,7 @@
 			line-name = "CONN_IN-7";
 			gpios = <7 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;
+			debounce-interval = <100>;
 			input;
 		};
 
@@ -631,7 +631,7 @@
 			line-name = "CONN_IN-11";
 			gpios = <11 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;
+			debounce-interval = <100>;
 			input;
 		};
 
@@ -639,7 +639,7 @@
 			line-name = "CONN_IN-10";
 			gpios = <10 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;
+			debounce-interval = <100>;
 			input;
 		};
 
@@ -647,7 +647,7 @@
 			line-name = "CONN_IN-9";
 			gpios = <9 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;
+			debounce-interval = <100>;
 			input;
 		};
 
@@ -655,7 +655,7 @@
 			line-name = "CONN_IN-8";
 			gpios = <8 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;
+			debounce-interval = <100>;
 			input;
 		};
 
@@ -663,7 +663,7 @@
 			line-name = "CONN_IN-15";
 			gpios = <15 GPIO_ACTIVE_LOW>;
 			wakeup-source;
-			debounce-interval = <10>;
+			debounce-interval = <100>;
 			input;
 		};
 
