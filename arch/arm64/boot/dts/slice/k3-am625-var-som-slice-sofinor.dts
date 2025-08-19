@@ -296,15 +296,6 @@
 		// };
 	// };
 
-	gpio-aggregator {
-		// pinctrl-names = "default";
-		// pinctrl-0 = <&gpio_pins>;
-		compatible = "gpio-aggregator";
-
-		gpios = <&pca9555In 9 GPIO_ACTIVE_HIGH>;
-		gpio-line-names = "COUVERCLE";
-	};
-
 	vdd_mmc1: regulator-3 {
 		compatible = "regulator-fixed";
 		regulator-name = "SD_power_en";
@@ -648,13 +639,13 @@
 			input;
 		};
 
-		// in10 {
-		// 	line-name = "CONN_IN-10";
-		// 	gpios = <&pca9555In 9 GPIO_ACTIVE_HIGH>;
-		// 	wakeup-source;
-		// 	debounce-interval = <10>;
-		// 	input;
-		// };
+		in10 {
+			line-name = "CONN_IN-10";
+			gpios = <&pca9555In 9 GPIO_ACTIVE_HIGH>;
+			wakeup-source;
+			debounce-interval = <10>;
+			input;
+		};
 
 		in9 {
 			line-name = "CONN_IN-9";
