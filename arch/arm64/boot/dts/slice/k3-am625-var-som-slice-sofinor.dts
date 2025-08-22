@@ -249,8 +249,8 @@
 		status = "okay";
 	};
 
-	br24g04: br24g04@54 {
-		compatible = "rohm,br24g04";
+	eeprom: br24g04@54 {
+		compatible = "atmel,24c04";
 		reg = <0x54>;
 		pagesize = <16>;
 		status = "okay";
