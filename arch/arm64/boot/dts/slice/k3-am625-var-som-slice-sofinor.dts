@@ -149,17 +149,17 @@
 	status = "okay";
 };
 //pin 117 eqep1_A
-&eqep1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&eqep1_pins_default>;
-	status = "okay";
-};
-// //pin 8 eqep2_A
-// &eqep2{
+// &eqep1 {
 // 	pinctrl-names = "default";
-// 	pinctrl-0 = <&eqep2_pins_default>;
+// 	pinctrl-0 = <&eqep1_pins_default>;
 // 	status = "okay";
 // };
+//pin 88 eqep2_A
+&eqep2{
+	pinctrl-names = "default";
+	pinctrl-0 = <&eqep2_pins_default>;
+	status = "okay";
+};
 
 
 &cpsw3g {
@@ -246,6 +246,13 @@
 		touchscreen-size-y = <480>;
 
 		wakeup-source;
+		status = "okay";
+	};
+
+	br24g04: br24g04@54 {
+		compatible = "rohm,br24g04";
+		reg = <0x54>;
+		pagesize = <16>;
 		status = "okay";
 	};
 };
