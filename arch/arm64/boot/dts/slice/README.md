@@ -22,6 +22,13 @@
     ```sudo rm /media/administrateur/root/boot/dtb/k3-am625-var-som-slice-sofinor.dtb
     sudo cp arch/arm64/boot/dts/slice/k3-am625-var-som-slice-sofinor.dtb /media/administrateur/root/boot/dtb/```
 
+5. using TFTP/NFS server:
+   ```
+   sudo rm /tftpboot/k3-am625-var-som-slice-sofinor.dtb
+   make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- -j$(nproc) dtbs
+   sudo cp arch/arm64/boot/dts/slice/k3-am625-var-som-slice-sofinor.dtb /tftpboot/
+   ```
+
 
 ## N.B.: Get rid of dirty word in kernel:
 ```bash
