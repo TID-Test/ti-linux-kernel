@@ -506,7 +506,7 @@
 
 &main_pmx0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&touchrst_pins_default &touch_irq_pins_default &future_irq_default>;
+	pinctrl-0 = <&touchrst_pins_default &touch_irq_pins_default>;
 
 	// TS and MCLR for MGC3030
 	mgc3030_pins_default: mgc3030-default-pins {
@@ -536,10 +536,10 @@
 		pinctrl-single,pins = <AM62X_IOPAD(0x01b0, PIN_INPUT, 7) /* (A20) MCASP0_ACLKR.GPIO1_14 */>;
 	};
 
-	//Interrupt for Future Input GPIO Expander
-	future_irq_default: future_irq_default {
-		pinctrl-single,pins = <AM62X_IOPAD(0x009c, PIN_INPUT, 7) /* (V25) GPMC0_WAIT1.GPIO0_38 */>;
-	};
+	// //Interrupt for Future Input GPIO Expander
+	// future_irq_default: future_irq_default {
+	// 	pinctrl-single,pins = <AM62X_IOPAD(0x009c, PIN_INPUT, 7) /* (V25) GPMC0_WAIT1.GPIO0_38 */>;
+	// };
 
 
 
