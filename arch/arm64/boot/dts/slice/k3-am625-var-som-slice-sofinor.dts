@@ -13,7 +13,7 @@
 #include "k3-am625-var-som.dtsi"
 
 / {
-	model = "Variscite VAR-SOM-AM62 on SLICE SOFINIOR";
+	model = "Variscite VAR-SOM-AM62 on SLICE SOFINIOR - 2";
 
 	aliases {
 		ethernet0 = &cpsw_port1;
@@ -115,10 +115,6 @@
 		states = <1800000 0x0>,
 				 <3300000 0x1>;
 		status = "okay";
-	};
-
-	sound-wm8904 {
-		status = "disabled";
 	};
 };
 
@@ -240,7 +236,7 @@
 		interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
 
 		irq-gpios = <&main_gpio1 16 GPIO_ACTIVE_LOW>;
-		reset-gpios = <&main_gpio1 17 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&main_gpio1 13 GPIO_ACTIVE_LOW>;
 
 		touchscreen-size-x = <800>;
 		touchscreen-size-y = <480>;
@@ -524,7 +520,7 @@
 
 	//touch reset pin
 	touchrst_pins_default: touchrst-default-pins {
-		pinctrl-single,pins = <AM62X_IOPAD(0x01bc, PIN_OUTPUT, 7) /* (A14) SPI0_CLK.GPIO1_17 */>;
+		pinctrl-single,pins = <AM62X_IOPAD(0x01ac, PIN_INPUT, 7) /* (E19) MCASP0_AFSR.GPIO1_13 */>;
 	};
 
 	//touch interrupt pin
@@ -534,7 +530,12 @@
 
 	//Interrupt for Input GPIO Expander
 	pca9555_irq_default: pca9555_irq_default {
-		pinctrl-single,pins = <AM62X_IOPAD(0x01b4, PIN_INPUT, 7) /* (A13) SPI0_CS0.GPIO1_15 */>;
+		pinctrl-single,pins = <AM62X_IOPAD(0x01b0, PIN_INPUT, 7) /* (A20) MCASP0_ACLKR.GPIO1_14 */>;
+	};
+
+	//Interrupt for Future Input GPIO Expander
+	future_irq_default: future_irq_default {
+		pinctrl-single,pins = <AM62X_IOPAD(0x009c, PIN_INPUT, 7) /* (V25) GPMC0_WAIT1.GPIO0_38 */>;
 	};
 
 
