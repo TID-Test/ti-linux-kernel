@@ -13,7 +13,7 @@
 #include "k3-am625-var-som.dtsi"
 
 / {
-	model = "Variscite VAR-SOM-AM62 on SLICE SOFINIOR - 2";
+	model = "Variscite VAR-SOM-AM62 on SLICE SOFINIOR - 3";
 
 	aliases {
 		ethernet0 = &cpsw_port1;
@@ -235,8 +235,11 @@
 		interrupt-parent = <&main_gpio1>;
 		interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
 
+		pinctrl-names = "default";
+		pinctrl-0 = <&touchrst_pins_default &touch_irq_pins_default>;
+
 		irq-gpios = <&main_gpio1 16 GPIO_ACTIVE_LOW>;
-		reset-gpios = <&main_gpio1 13 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&main_gpio1 17 GPIO_ACTIVE_LOW>;
 
 		touchscreen-size-x = <800>;
 		touchscreen-size-y = <480>;
@@ -505,9 +508,6 @@
 };
 
 &main_pmx0 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&touchrst_pins_default &touch_irq_pins_default>;
-
 	// TS and MCLR for MGC3030
 	mgc3030_pins_default: mgc3030-default-pins {
 		pinctrl-single,pins = <
@@ -523,7 +523,7 @@
 
 	//touch reset pin
 	touchrst_pins_default: touchrst-default-pins {
-		pinctrl-single,pins = <AM62X_IOPAD(0x01ac, PIN_OUTPUT, 7) /* (E19) MCASP0_AFSR.GPIO1_13 */>;
+		pinctrl-single,pins = <AM62X_IOPAD(0x01bc, PIN_OUTPUT, 7) /* (A14) SPI0_CLK.GPIO1_17 */>;
 	};
 
 	//touch interrupt pin
@@ -533,7 +533,7 @@
 
 	//Interrupt for Input GPIO Expander
 	pca9555_irq_default: pca9555_irq_default {
-		pinctrl-single,pins = <AM62X_IOPAD(0x01b0, PIN_INPUT, 7) /* (A20) MCASP0_ACLKR.GPIO1_14 */>;
+		pinctrl-single,pins = <AM62X_IOPAD(0x01b4, PIN_INPUT, 7) /* (A13) SPI0_CS0.GPIO1_15 */>;
 	};
 
 	// //Interrupt for Future Input GPIO Expander
