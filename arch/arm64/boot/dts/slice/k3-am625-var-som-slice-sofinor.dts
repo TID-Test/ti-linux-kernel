@@ -212,9 +212,9 @@
 	};
 };
 
-// &main_i2c0 {
-// 	status = "disabled";
-// };
+&main_i2c0 {
+	status = "disabled";
+};
 
 &main_i2c1 {
 	pinctrl-names = "default";
@@ -267,6 +267,10 @@
 		ti,vref_mv = <2500>;
 
 		status = "okay";
+	};
+
+	wm8904: audio-codec@1a {
+		status = "disabled";
 	};
 
 	/* GPIO expander */
@@ -377,6 +381,7 @@
 		};
 
 	};
+	
 	pca9555In: pca9555In@21 {
 		compatible = "nxp,pca9555";
 		reg = <0x21>;
@@ -508,6 +513,9 @@
 };
 
 &main_pmx0 {
+	// pinctrl-names = "default";
+	// pinctrl-0 = <&touchrst_pins_default &touch_irq_pins_default &mgc3030_pins_default>;
+
 	// TS and MCLR for MGC3030
 	mgc3030_pins_default: mgc3030-default-pins {
 		pinctrl-single,pins = <
@@ -634,12 +642,12 @@
 		>;
 	};
 
-	main_uart6_pins_default: main-uart6-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x009c, PIN_INPUT, 3) /* (V25) GPMC0_WAIT1.UART6_RXD */
-			AM62X_IOPAD(0x0244, PIN_OUTPUT, 1) /* (C17) MMC1_SDWP.UART6_TXD */
-		>;
-	};
+	// main_uart6_pins_default: main-uart6-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x009c, PIN_INPUT, 3) /* (V25) GPMC0_WAIT1.UART6_RXD */
+	// 		AM62X_IOPAD(0x0244, PIN_OUTPUT, 1) /* (C17) MMC1_SDWP.UART6_TXD */
+	// 	>;
+	// };
 
 	main_usb0_pins_default: main-usb0-pins-default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x0254, PIN_OUTPUT, 0) /* (C20) USB0_DRVVBUS */>;
@@ -680,9 +688,9 @@
 };
 
 &main_uart6 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_uart6_pins_default>;
-	status = "okay";
+	// pinctrl-names = "default";
+	// pinctrl-0 = <&main_uart6_pins_default>;
+	status = "disabled";
 };
 
 &mcu_gpio0 {
