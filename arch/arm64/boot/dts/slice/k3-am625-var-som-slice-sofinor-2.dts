@@ -51,11 +51,11 @@
 		bootargs = "console=ttyS0,115200n8 earlycon=ns16550a,mmio32,0x02800000";
 	};
 
-	clk_ov5640_fixed: clock {
-		#clock-cells = <0>;
-		compatible = "fixed-clock";
-		clock-frequency = <24000000>;
-	};
+	// clk_ov5640_fixed: clock {
+	// 	#clock-cells = <0>;
+	// 	compatible = "fixed-clock";
+	// 	clock-frequency = <24000000>;
+	// };
 
 	display {
 		compatible = "lcdis,lds050wvla07201c040a";
@@ -82,14 +82,14 @@
 		};
 	};
 
-	ov5640_buf_en: ov5640-buf-en {
-		compatible = "regulator-fixed";
-		regulator-name = "ov5640_buf_en";
-		gpios = <&main_gpio0 21 GPIO_ACTIVE_HIGH>;
-		regulator-always-on;
-		regulator-boot-on;
-		status="okay";
-	};
+	// ov5640_buf_en: ov5640-buf-en {
+	// 	compatible = "regulator-fixed";
+	// 	regulator-name = "ov5640_buf_en";
+	// 	gpios = <&main_gpio0 21 GPIO_ACTIVE_HIGH>;
+	// 	regulator-always-on;
+	// 	regulator-boot-on;
+	// 	status="okay";
+	// };
 
 	vdd_mmc1: regulator-3 {
 		compatible = "regulator-fixed";
@@ -175,16 +175,16 @@
 	status = "okay";
 };
 
-&csi0_port0 {
-	status = "okay";
+// &csi0_port0 {
+// 	status = "okay";
 
-	csi2rx0_in_sensor: endpoint {
-		remote-endpoint = <&csi2_cam0>;
-		bus-type = <4>; /* CSI2 DPHY. */
-		clock-lanes = <0>;
-		data-lanes = <1 2>;
-	};
-};
+// 	csi2rx0_in_sensor: endpoint {
+// 		remote-endpoint = <&csi2_cam0>;
+// 		bus-type = <4>; /* CSI2 DPHY. */
+// 		clock-lanes = <0>;
+// 		data-lanes = <1 2>;
+// 	};
+// };
 
 &dphy0 {
 	status = "okay";
@@ -274,27 +274,27 @@
 		};
 	};
 
-	ov5640: camera@3c {
-		compatible = "ovti,ov5640";
-		reg = <0x3c>;
+	// ov5640: camera@3c {
+	// 	compatible = "ovti,ov5640";
+	// 	reg = <0x3c>;
 
-		clocks = <&clk_ov5640_fixed>;
-		clock-names = "xclk";
+	// 	clocks = <&clk_ov5640_fixed>;
+	// 	clock-names = "xclk";
 
-		powerdown-gpios = <&main_gpio0 10 GPIO_ACTIVE_HIGH>;
-		reset-gpios = <&main_gpio0 22 GPIO_ACTIVE_LOW>;
+	// 	powerdown-gpios = <&main_gpio0 10 GPIO_ACTIVE_HIGH>;
+	// 	reset-gpios = <&main_gpio0 22 GPIO_ACTIVE_LOW>;
 
-		pinctrl-names = "default";
-		pinctrl-0 = <&ov5640_pins_default>;
+	// 	pinctrl-names = "default";
+	// 	pinctrl-0 = <&ov5640_pins_default>;
 
-		port {
-			csi2_cam0: endpoint {
-				remote-endpoint = <&csi2rx0_in_sensor>;
-				clock-lanes = <0>;
-				data-lanes = <1 2>;
-			};
-		};
-	};
+	// 	port {
+	// 		csi2_cam0: endpoint {
+	// 			remote-endpoint = <&csi2rx0_in_sensor>;
+	// 			clock-lanes = <0>;
+	// 			data-lanes = <1 2>;
+	// 		};
+	// 	};
+	// };
 };
 
 &main_i2c1 {
@@ -783,13 +783,13 @@
 		>;
 	};
 
-	ov5640_pins_default: ov5640-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0028, PIN_OUTPUT, 7) /* (J22) OSPI0_D7.GPIO0_10 */
-			AM62X_IOPAD(0x0054, PIN_OUTPUT, 7) /* (P21) GPMC0_AD6.GPIO0_21 */
-			AM62X_IOPAD(0x0058, PIN_OUTPUT, 7) /* (R23) GPMC0_AD7.GPIO0_22 */
-		>;
-	};
+	// ov5640_pins_default: ov5640-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x0028, PIN_OUTPUT, 7) /* (J22) OSPI0_D7.GPIO0_10 */
+	// 		AM62X_IOPAD(0x0054, PIN_OUTPUT, 7) /* (P21) GPMC0_AD6.GPIO0_21 */
+	// 		AM62X_IOPAD(0x0058, PIN_OUTPUT, 7) /* (R23) GPMC0_AD7.GPIO0_22 */
+	// 	>;
+	// };
 
 	pca9534_irq_default: pca9534_irq_default {
 		pinctrl-single,pins = <
