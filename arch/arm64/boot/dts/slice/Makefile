@@ -11,3 +11,4 @@
 # Boards with AM62x SoC
 dtb-$(CONFIG_ARCH_K3) += k3-am625-var-som-slice-luxomed.dtb
 dtb-$(CONFIG_ARCH_K3) += k3-am625-var-som-slice-sofinor.dtb
+dtb-$(CONFIG_ARCH_K3) += k3-am625-var-som-slice-sofinor-2.dtb
