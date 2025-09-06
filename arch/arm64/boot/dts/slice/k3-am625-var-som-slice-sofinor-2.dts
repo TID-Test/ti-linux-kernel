@@ -121,8 +121,7 @@
 &cpsw3g {
 	status = "okay";
 	pinctrl-names = "default";
-	pinctrl-0 = <&main_rgmii1_pins_default
-		     &main_rgmii2_pins_default>;
+	pinctrl-0 = <&main_rgmii1_pins_default>;
 
 	cpts@3d000 {
 		/* MAP HW3_TS_PUSH to GENF1 */
@@ -130,23 +129,8 @@
 	};
 };
 
-&cpsw3g_mdio {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_mdio1_pins_default>;
-	cpsw3g_phy1: ethernet-phy@5 {
-		reg = <5>;
-		compatible = "ethernet-phy-id0283.bc30";
-		reset-gpios = <&pca9534 5 GPIO_ACTIVE_LOW>;
-		reset-assert-us = <10000>;
-		reset-deassert-us = <20000>;
-	};
-};
-
 &cpsw_port2 {
-	phy-mode = "rgmii";
-	phy-handle = <&cpsw3g_phy1>;
-	status = "okay";
+	status = "disabled";
 };
 
 &dphy0 {
@@ -637,23 +621,6 @@
 			AM62X_IOPAD(0x029c, PIN_OUTPUT, 0) /* (AE3) OLDI0_CLK0P */
 			AM62X_IOPAD(0x02a8, PIN_OUTPUT, 0) /* (AE4) OLDI0_CLK1N */
 			AM62X_IOPAD(0x02a4, PIN_OUTPUT, 0) /* (AD5) OLDI0_CLK1P */
-		>;
-	};
-
-	main_rgmii2_pins_default: main-rgmii2-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x184, PIN_INPUT, 0) /* (AE23) RGMII2_RD0 */
-			AM62X_IOPAD(0x188, PIN_INPUT, 0) /* (AB20) RGMII2_RD1 */
-			AM62X_IOPAD(0x18c, PIN_INPUT, 0) /* (AC21) RGMII2_RD2 */
-			AM62X_IOPAD(0x190, PIN_INPUT, 0) /* (AE22) RGMII2_RD3 */
-			AM62X_IOPAD(0x180, PIN_INPUT, 0) /* (AD23) RGMII2_RXC */
-			AM62X_IOPAD(0x17c, PIN_INPUT, 0) /* (AD22) RGMII2_RX_CTL */
-			AM62X_IOPAD(0x16c, PIN_INPUT, 0) /* (Y18) RGMII2_TD0 */
-			AM62X_IOPAD(0x170, PIN_INPUT, 0) /* (AA18) RGMII2_TD1 */
-			AM62X_IOPAD(0x174, PIN_INPUT, 0) /* (AD21) RGMII2_TD2 */
-			AM62X_IOPAD(0x178, PIN_INPUT, 0) /* (AC20) RGMII2_TD3 */
-			AM62X_IOPAD(0x168, PIN_INPUT_PULLDOWN, 0) /* (AE21) RGMII2_TXC */
-			AM62X_IOPAD(0x164, PIN_INPUT, 0) /* (AA19) RGMII2_TX_CTL */
 		>;
 	};
 
