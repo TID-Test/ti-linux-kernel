@@ -11,7 +11,7 @@
 #include "k3-am625-var-som.dtsi"
 
 / {
-	model = "Variscite VAR-SOM-AM62 on Symphony-Board";
+	model = "Variscite VAR-SOM-AM62 on SOFINOR V2";
 
 	aliases {
 		ethernet0 = &cpsw_port1;
@@ -178,41 +178,6 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_i2c0_pins_default>;
 	clock-frequency = <400000>;
-
-	/* GPIO expander */
-	pca9534: gpio@20 {
-		compatible = "nxp,pca9534";
-		reg = <0x20>;
-		gpio-controller;
-		pinctrl-names = "default";
-		pinctrl-0 = <&pca9534_irq_default>;
-		interrupt-parent = <&main_gpio1>;
-		interrupts = <30 IRQ_TYPE_EDGE_FALLING>;
-		#gpio-cells = <2>;
-		wakeup-source;
-		status = "okay";
-
-		usb3_sel_hog {
-			gpio-hog;
-			gpios = <4 0>;
-			output-low;
-			line-name = "usb3_sel";
-		};
-
-		eth_som_vselect_hog {
-			gpio-hog;
-			gpios = <6 0>;
-			output-low;
-			line-name = "eth-vselect";
-		};
-
-		eth_mdio_enable_hog {
-			gpio-hog;
-			gpios = <7 0>;
-			output-high;
-			line-name = "eth-mdio-enable";
-		};
-	};
 };
 
 &main_i2c1 {
@@ -514,12 +479,6 @@
 
 &main_pmx0 {
 
-	extcon_pins_default: extcon-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x01a8, PIN_INPUT, 7) /* (D20) MCASP0_AFSX.GPIO1_12 */
-		>;
-	};
-
     // TS and MCLR for MGC3030
 	mgc3030_pins_default: mgc3030-default-pins {
 		pinctrl-single,pins = <
@@ -647,16 +606,8 @@
 		>;
 	};
 
-	main_usb1_pins_default: main-usb1-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */
-		>;
-	};
-
-	pca9534_irq_default: pca9534_irq_default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x01f0, PIN_INPUT, 7) /* (A18) EXT_REFCLK1.GPIO1_30 */
-		>;
+    main_usb0_pins_default: main-usb0-pins-default {
+		pinctrl-single,pins = <AM62X_IOPAD(0x0254, PIN_OUTPUT, 0) /* (C20) USB0_DRVVBUS */>;
 	};
 
 	vdd_mmc1_pins_default: vdd-mmc1-pins-default {
@@ -758,55 +709,22 @@
 };
 
 &usb0 {
-	#address-cells = <1>;
-	#size-cells = <0>;
-	usb-role-switch;
-	status="okay";
-
-	port@0 {
-		reg = <0>;
-
-		typec_hs: endpoint {
-			remote-endpoint = <&usb_con_hs>;
-		};
-	};
+	dr_mode = "host";
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_usb0_pins_default>;
+	status = "okay";
 };
 
 &usb1 {
-	dr_mode = "host";
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_usb1_pins_default>;
-	status="okay";
+	status = "disabled";
 };
 
 &usbss0 {
 	status = "okay";
-
-	connector {
-		compatible = "gpio-usb-b-connector","usb-c-connector";
-		pinctrl-names = "default";
-		pinctrl-0 = <&extcon_pins_default>;
-		label = "USB-C";
-		id-gpios = <&main_gpio1 12 GPIO_ACTIVE_HIGH>;
-		status = "okay";
-
-		ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			port@0 {
-				reg = <0>;
-
-				usb_con_hs: endpoint {
-					remote-endpoint = <&typec_hs>;
-				};
-			};
-		};
-	};
 };
 
 &usbss1 {
-	status = "okay";
+	status = "disabled";
 };
 
 &wkup_r5fss0_core0 {
