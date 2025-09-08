@@ -11,21 +11,21 @@
 #include "k3-am625-var-som.dtsi"
 
 / {
-	model = "Variscite VAR-SOM-AM62 on SOFINOR V2";
+	model = "Variscite VAR-SOM-AM62 on SOFINOR V3";
 
 	aliases {
 		ethernet0 = &cpsw_port1;
-		ethernet1 = &cpsw_port2;
+		// ethernet1 = &cpsw_port2;
 		mmc0 = &sdhci0;
 		mmc1 = &sdhci1;
 		mmc2 = &sdhci2;
 		serial0 = &main_uart0;
 		serial2 = &main_uart2;
 		serial5 = &main_uart5;
-		serial6 = &main_uart6;
+		// serial6 = &main_uart6;
 		spi5 = &main_spi2;
 		usb0 = &usb0;
-		usb1 = &usb1;
+		// usb1 = &usb1;
 	};
 
 	backlight: backlight {
@@ -104,14 +104,14 @@
 	};
 };
 
-//pin 45 eqep0_A
+//pin 45 eqep0_A 23200000.counter
 &eqep0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&eqep0_pins_default>;
 	status = "okay";
 };
 
-//pin 88 eqep2_A
+//pin 88 eqep2_A 23220000.counter
 &eqep2{
 	pinctrl-names = "default";
 	pinctrl-0 = <&eqep2_pins_default>;
@@ -128,7 +128,6 @@
 		ti,pps = <2 1>;
 	};
 };
-
 
 &cpsw_port2 {
 	status = "disabled";
@@ -174,12 +173,13 @@
 	};
 };
 
-&main_i2c0{
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_i2c0_pins_default>;
-	clock-frequency = <400000>;
-};
+// I2C 0 should be commented to eqep2 works
+// &main_i2c0{
+// 	status = "okay";
+// 	pinctrl-names = "default";
+// 	pinctrl-0 = <&main_i2c0_pins_default>;
+// 	clock-frequency = <400000>;
+// };
 
 &main_i2c1 {
 	pinctrl-names = "default";
@@ -221,6 +221,14 @@
 	};
 };
 
+&wm8904 {
+	status = "disabled";
+};
+
+&mcasp1 {
+	status = "disabled";
+};
+
 // I2C#B sur dev kit
 &main_i2c2 {
 	// ti,ads7828
@@ -232,10 +240,6 @@
 		ti,vref_mv = <2500>;
 
 		status = "okay";
-	};
-
-	wm8904: audio-codec@1a {
-		status = "disabled";
 	};
 
 	/* GPIO expander */
@@ -521,7 +525,7 @@
 	};
 
 	// pin 88
-	eqep2_pins_default: qep2-default-pins {
+	eqep2_pins_default: eqep2-default-pins {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x01e0, PIN_INPUT, 5) /* (B16) I2C0_SCL.EQEP2_A */
 		>;
@@ -584,15 +588,6 @@
 		>;
 	};
 
-	// main_spi2_pins_default: main_spi2-pins-default {
-	// 	pinctrl-single,pins = <
-	// 		AM62X_IOPAD(0x01b0, PIN_INPUT, 1) /* (A20) MCASP0_ACLKR.SPI2_CLK */
-	// 		AM62X_IOPAD(0x0194, PIN_OUTPUT, 1) /* (B19) MCASP0_AXR3.SPI2_D0 */
-	// 		AM62X_IOPAD(0x0198, PIN_INPUT, 1) /* (A19) MCASP0_AXR2.SPI2_D1 */
-	// 		AM62X_IOPAD(0x01ac, PIN_OUTPUT, 7) /* (E19) MCASP0_AFSR.GPIO1_13 */
-	// 	>;
-	// };
-
 	main_uart0_pins_default: main-uart0-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x1c8, PIN_INPUT, 0) /* (D14) UART0_RXD */
@@ -622,6 +617,10 @@
 			AM62X_IOPAD(0x00e4, PIN_OUTPUT, 7) /* (AA23) VOUT0_DATA11.GPIO0_56 */
 		>;
 	};
+};
+
+&main_spi0 {
+	status = "disabled";
 };
 
 &main_spi2 {
