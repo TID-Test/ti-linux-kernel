@@ -15,17 +15,17 @@
 
 	aliases {
 		ethernet0 = &cpsw_port1;
-		// ethernet1 = &cpsw_port2;
+		ethernet1 = &cpsw_port2;
 		mmc0 = &sdhci0;
 		mmc1 = &sdhci1;
 		mmc2 = &sdhci2;
 		serial0 = &main_uart0;
 		serial2 = &main_uart2;
 		serial5 = &main_uart5;
-		// serial6 = &main_uart6;
+		serial6 = &main_uart6;
 		spi5 = &main_spi2;
 		usb0 = &usb0;
-		// usb1 = &usb1;
+		usb1 = &usb1;
 	};
 
 	backlight: backlight {
@@ -52,7 +52,7 @@
 	};
 
 	display {
-		compatible = "lcdis,lds050wvla07201c040a";
+		compatible = "lcdis,lds050wvla07201c040a", "sgd,gktw70sdae4se";
 		backlight = <&backlight>;
 		status = "okay";
 
@@ -111,12 +111,12 @@
 	status = "okay";
 };
 
-//pin 88 eqep2_A 23220000.counter
-&eqep2{
-	pinctrl-names = "default";
-	pinctrl-0 = <&eqep2_pins_default>;
-	status = "okay";
-};
+// //pin 88 eqep2_A 23220000.counter
+// &eqep2{
+// 	pinctrl-names = "default";
+// 	pinctrl-0 = <&eqep2_pins_default>;
+// 	status = "okay";
+// };
 
 &cpsw3g {
 	status = "okay";
@@ -174,12 +174,12 @@
 };
 
 // I2C 0 should be commented to eqep2 works
-// &main_i2c0{
-// 	status = "okay";
-// 	pinctrl-names = "default";
-// 	pinctrl-0 = <&main_i2c0_pins_default>;
-// 	clock-frequency = <400000>;
-// };
+&main_i2c0{
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_i2c0_pins_default>;
+	clock-frequency = <400000>;
+};
 
 &main_i2c1 {
 	pinctrl-names = "default";
@@ -194,6 +194,7 @@
 		status = "okay";
 	};
 
+	/* Capacitive touch controller SOFINOR*/
     capacitive_touch: gt911@14 {
 		compatible = "goodix,gt911";
 		reg = <0x14>;
@@ -209,6 +210,23 @@
 		touchscreen-size-x = <800>;
 		touchscreen-size-y = <480>;
 
+		wakeup-source;
+		status = "okay";
+	};
+
+	/* Capacitive touch controller VARICITE*/
+	ft5x06_ts: ft5x06_ts@38 {
+		compatible = "edt,edt-ft5206";
+		reg = <0x38>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&touch_irq_pins_default>;
+		interrupts-extended = <&main_gpio1 16 IRQ_TYPE_EDGE_FALLING>,
+							  <&main_pmx0 0x1B8>;
+		interrupt-names = "irq", "wakeup";
+		touchscreen-size-x = <800>;
+		touchscreen-size-y = <480>;
+		touchscreen-inverted-x;
+		touchscreen-inverted-y;
 		wakeup-source;
 		status = "okay";
 	};
@@ -483,6 +501,8 @@
 
 
 &main_pmx0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&future_irq_default>;
 
     // TS and MCLR for MGC3030
 	mgc3030_pins_default: mgc3030-default-pins {
@@ -492,10 +512,14 @@
 		>;
 	};
 
-	//to disable SPI0 pins in dtsi
-	main_spi0_pins_default: main_spi0-pins-default {
-		pinctrl-single,pins = <>;
-	};
+	// //to disable SPI0 pins in dtsi
+	// main_spi0_pins_default: main_spi0-pins-default {
+	// 	pinctrl-single,pins = <>;
+	// };
+
+	// main_mcasp1_pins_default: main-mcasp1-pins-default {
+	// 	pinctrl-single,pins = <>;
+	// };
 
 	//touch reset pin
 	touchrst_pins_default: touchrst-default-pins {
@@ -513,9 +537,9 @@
 	};
 
 	// //Interrupt for Future Input GPIO Expander
-	// future_irq_default: future_irq_default {
-	// 	pinctrl-single,pins = <AM62X_IOPAD(0x009c, PIN_INPUT, 7) /* (V25) GPMC0_WAIT1.GPIO0_38 */>;
-	// };
+	future_irq_default: future_irq_default {
+		pinctrl-single,pins = <AM62X_IOPAD(0x009c, PIN_INPUT, 7) /* (V25) GPMC0_WAIT1.GPIO0_38 */>;
+	};
 
 	//pin 45
 	eqep0_pins_default: eqep0-default-pins {
@@ -524,12 +548,12 @@
 		>;
 	};
 
-	// pin 88
-	eqep2_pins_default: eqep2-default-pins {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x01e0, PIN_INPUT, 5) /* (B16) I2C0_SCL.EQEP2_A */
-		>;
-	};
+	// // pin 88
+	// eqep2_pins_default: eqep2-default-pins {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x01e0, PIN_INPUT, 5) /* (B16) I2C0_SCL.EQEP2_A */
+	// 	>;
+	// };
 
 	main_epwm1_pins_default: main-epwm1-pins-default {
 		pinctrl-single,pins = <
@@ -602,6 +626,13 @@
 		>;
 	};
 
+	// main_uart6_pins_default: main-uart6-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x009c, PIN_INPUT, 3) /* (V25) GPMC0_WAIT1.UART6_RXD */
+	// 		AM62X_IOPAD(0x0244, PIN_OUTPUT, 1) /* (C17) MMC1_SDWP.UART6_TXD */
+	// 	>;
+	// };
+
     main_usb0_pins_default: main-usb0-pins-default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x0254, PIN_OUTPUT, 0) /* (C20) USB0_DRVVBUS */>;
 	};
@@ -645,6 +676,8 @@
 };
 
 &main_uart6 {
+	// pinctrl-names = "default";
+	// pinctrl-0 = <&main_uart6_pins_default>;
 	status = "disabled";
 };
 
