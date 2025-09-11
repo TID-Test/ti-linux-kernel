@@ -499,6 +499,14 @@
 	};
 };
 
+&main_spi0_pins_default{
+	pinctrl-single,pins = <>;
+};
+
+&main_mcasp1_pins_default{
+	pinctrl-single,pins = <>;
+};
+
 
 &main_pmx0 {
 	pinctrl-names = "default";
@@ -511,15 +519,6 @@
 		AM62X_IOPAD(0x01dc, PIN_INPUT, 7) /* (E15) MCAN0_RX.GPIO1_25 */ /*MGC3030 TS*/
 		>;
 	};
-
-	// //to disable SPI0 pins in dtsi
-	// main_spi0_pins_default: main_spi0-pins-default {
-	// 	pinctrl-single,pins = <>;
-	// };
-
-	// main_mcasp1_pins_default: main-mcasp1-pins-default {
-	// 	pinctrl-single,pins = <>;
-	// };
 
 	//touch reset pin
 	touchrst_pins_default: touchrst-default-pins {
