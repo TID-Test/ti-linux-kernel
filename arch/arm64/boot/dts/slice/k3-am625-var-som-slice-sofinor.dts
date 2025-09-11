@@ -493,13 +493,20 @@
 
 &main_pmx0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&future_irq_default>;
+	pinctrl-0 = <&future_irq_default &mgc3030_detect_default>;
 
     // TS and MCLR for MGC3030
 	mgc3030_pins_default: mgc3030-default-pins {
 		pinctrl-single,pins = <
 		AM62X_IOPAD(0x01d8, PIN_OUTPUT, 7) /* (C15) MCAN0_TX.GPIO1_24 */ /*MGC3030 MCLR*/
 		AM62X_IOPAD(0x01dc, PIN_INPUT, 7) /* (E15) MCAN0_RX.GPIO1_25 */ /*MGC3030 TS*/
+		>;
+	};
+
+	// when connected pulled up by the pcb
+	mgc3030_detect_default: mgc3030-detect-default-pins {
+		pinctrl-single,pins = <
+		AM62X_IOPAD(0x0190, PIN_INPUT_PULLDOWN, 7) /* (AE22) RGMII2_RD3.GPIO1_6 */
 		>;
 	};
 
@@ -520,7 +527,9 @@
 
 	// //Interrupt for Future Input GPIO Expander
 	future_irq_default: future_irq_default {
-		pinctrl-single,pins = <AM62X_IOPAD(0x009c, PIN_INPUT, 7) /* (V25) GPMC0_WAIT1.GPIO0_38 */>;
+		pinctrl-single,pins = <
+		AM62X_IOPAD(0x01c4, PIN_INPUT, 7) /* (B14) SPI0_D1.GPIO1_19 */
+		>;
 	};
 
 	//pin 45
