@@ -52,7 +52,7 @@
 	};
 
 	display {
-		compatible = "lcdis,lds050wvla07201c040a", "sgd,gktw70sdae4se";
+		compatible = "lcdis,lds050wvla07201c040a";
 		backlight = <&backlight>;
 		status = "okay";
 
@@ -112,11 +112,11 @@
 };
 
 // //pin 88 eqep2_A 23220000.counter
-// &eqep2{
-// 	pinctrl-names = "default";
-// 	pinctrl-0 = <&eqep2_pins_default>;
-// 	status = "okay";
-// };
+&eqep2{
+	pinctrl-names = "default";
+	pinctrl-0 = <&eqep2_pins_default>;
+	status = "okay";
+};
 
 &cpsw3g {
 	status = "okay";
@@ -210,23 +210,6 @@
 		touchscreen-size-x = <800>;
 		touchscreen-size-y = <480>;
 
-		wakeup-source;
-		status = "okay";
-	};
-
-	/* Capacitive touch controller VARICITE*/
-	ft5x06_ts: ft5x06_ts@38 {
-		compatible = "edt,edt-ft5206";
-		reg = <0x38>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&touch_irq_pins_default>;
-		interrupts-extended = <&main_gpio1 16 IRQ_TYPE_EDGE_FALLING>,
-							  <&main_pmx0 0x1B8>;
-		interrupt-names = "irq", "wakeup";
-		touchscreen-size-x = <800>;
-		touchscreen-size-y = <480>;
-		touchscreen-inverted-x;
-		touchscreen-inverted-y;
 		wakeup-source;
 		status = "okay";
 	};
@@ -547,12 +530,12 @@
 		>;
 	};
 
-	// // pin 88
-	// eqep2_pins_default: eqep2-default-pins {
-	// 	pinctrl-single,pins = <
-	// 		AM62X_IOPAD(0x01e0, PIN_INPUT, 5) /* (B16) I2C0_SCL.EQEP2_A */
-	// 	>;
-	// };
+	// // pin 71
+	eqep2_pins_default: eqep2-default-pins {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x018c, PIN_INPUT, 8) /* (AC21) RGMII2_RD2.EQEP2_A */
+		>;
+	};
 
 	main_epwm1_pins_default: main-epwm1-pins-default {
 		pinctrl-single,pins = <
