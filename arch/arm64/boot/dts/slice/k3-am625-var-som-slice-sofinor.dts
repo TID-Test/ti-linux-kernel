@@ -232,6 +232,7 @@
 
 // I2C#B sur dev kit
 &main_i2c2 {
+	clock-frequency = <100000>; //change it to 100kHz to work correctly with p82b715dr
 	// ti,ads7828
 	adc: ads7828@48 {
 		compatible = "ti,ads7828";
