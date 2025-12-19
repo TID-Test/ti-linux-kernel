@@ -195,24 +195,24 @@
 	};
 
 	/* Capacitive touch controller SOFINOR*/
-    // capacitive_touch: gt911@14 {
-	// 	compatible = "goodix,gt911";
-	// 	reg = <0x14>;
-	// 	interrupt-parent = <&main_gpio1>;
-	// 	interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
+    capacitive_touch: gt911@14 {
+		compatible = "goodix,gt911";
+		reg = <0x14>;
+		interrupt-parent = <&main_gpio1>;
+		interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
 
-	// 	pinctrl-names = "default";
-	// 	pinctrl-0 = <&touchrst_pins_default &touch_irq_pins_default>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&touchrst_pins_default &touch_irq_pins_default>;
 
-	// 	irq-gpios = <&main_gpio1 16 GPIO_ACTIVE_LOW>;
-	// 	reset-gpios = <&main_gpio1 17 GPIO_ACTIVE_LOW>;
+		irq-gpios = <&main_gpio1 16 GPIO_ACTIVE_LOW>;
+		// reset-gpios = <&main_gpio1 17 GPIO_ACTIVE_LOW>;
 
-	// 	touchscreen-size-x = <800>;
-	// 	touchscreen-size-y = <480>;
+		touchscreen-size-x = <800>;
+		touchscreen-size-y = <480>;
 
-	// 	wakeup-source;
-	// 	status = "okay";
-	// };
+		wakeup-source;
+		status = "okay";
+	};
 
 	eeprom: br24g04@54 {
 		compatible = "atmel,24c04";
@@ -494,7 +494,7 @@
 
 &main_pmx0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&future_irq_default &mgc3030_detect_default &touchrst_pins_default &touch_irq_pins_default>;
+	pinctrl-0 = <&future_irq_default &mgc3030_detect_default>;
 
     // TS and MCLR for MGC3030
 	mgc3030_pins_default: mgc3030-default-pins {
