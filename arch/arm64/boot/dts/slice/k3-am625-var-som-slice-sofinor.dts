@@ -205,7 +205,7 @@
 		pinctrl-0 = <&touchrst_pins_default &touch_irq_pins_default>;
 
 		irq-gpios = <&main_gpio1 16 GPIO_ACTIVE_LOW>;
-		// reset-gpios = <&main_gpio1 17 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&main_gpio1 17 GPIO_ACTIVE_LOW>;
 
 		touchscreen-size-x = <800>;
 		touchscreen-size-y = <480>;
